@@ -25,7 +25,7 @@ const ADS_CONFIG = {
     // GENEL GOOGLE ADSENSE AYARLARI
     // ------------------------------------------------------------------------
     googleAdsense: {
-        enabled: false, // AdSense kodları aktif edilsin mi? (true = Açık, false = Kapalı)
+        enabled: true, // AdSense kodları aktif edilsin mi? (true = Açık, false = Kapalı)
         client: "ca-pub-2401373246538934" // Google AdSense Yayıncı Kimliğiniz (ads.txt ile senkron)
     },
 
