@@ -17,4 +17,10 @@
       <image:title>Kehribar Medya İkonu</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://kehribardergisi.com/gizlilik-politikasi.html</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

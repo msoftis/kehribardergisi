@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initStickyAd();
     initScrollToTop();
     initSaleModal();
+    initCookieConsent();
 });
 
 /* ==========================================================================
@@ -1495,6 +1496,27 @@ function initSaleModal() {
         if (e.key === 'Escape' && modal.classList.contains('open')) {
             closeModal();
         }
+    });
+}
+
+/* ==========================================================================
+   15. ÇEREZ ONAY ÇUBUĞU (COOKIE CONSENT)
+   ========================================================================== */
+function initCookieConsent() {
+    const banner = document.getElementById('cookie-consent-banner');
+    const acceptBtn = document.getElementById('cookie-accept-btn');
+    if (!banner || !acceptBtn) return;
+
+    if (!localStorage.getItem('kehribar_cookie_accepted')) {
+        banner.style.display = 'block';
+    }
+
+    acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('kehribar_cookie_accepted', 'true');
+        banner.style.opacity = '0';
+        setTimeout(() => {
+            banner.style.display = 'none';
+        }, 300);
     });
 }
 

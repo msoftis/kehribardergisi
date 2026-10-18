@@ -248,7 +248,7 @@
 
             <!-- EN SAĞDA SATILIK ETİKETİ & HAMBURGER MENÜ -->
             <div class="header-actions">
-                <button type="button" id="sale-badge-btn" class="domain-sale-badge" title="Bu alan adı ve portal satılıktır (49$) - Detayları ve teklifi gör">
+                <button type="button" id="sale-badge-btn" class="domain-sale-badge" style="display: none !important;" title="Bu alan adı ve portal satılıktır (49$) - Detayları ve teklifi gör">
                     <span class="sale-pulse"></span>
                     <span class="sale-tag">SATILIK</span>
                     <strong class="sale-price">49$</strong>
@@ -326,7 +326,7 @@
                 </div>
             </div>
 
-            <div class="drawer-section ad-info-section">
+            <div class="drawer-section ad-info-section drawer-sale-box" style="display: none !important;">
                 <h4>Alan Adı & Web Sitesi Satışı</h4>
                 <p><strong>kehribardergisi.com</strong> alan adı ve tüm medya portalı <strong>49$</strong> bedelle satışta!</p>
                 <button type="button" id="drawer-sale-btn" class="drawer-btn open-sale-modal">Satılık Detaylarını İncele (49$)</button>
@@ -1092,6 +1092,51 @@
             </div>
         </div>
 
+        <!-- KEHRİBAR MEDYA HAKKINDA, YAYIN İLKELERİ VE KÜNYE BÖLÜMÜ -->
+        <section id="hakkimizda" class="portal-info-section mt-section">
+            <div class="portal-info-card">
+                <div class="portal-info-header">
+                    <span class="info-badge">KEHRİBAR MEDYA HAKKINDA</span>
+                    <h2 class="portal-info-title">Türkiye ve Dünyanın Dijital Basın & Medya Portalı</h2>
+                    <p class="portal-info-desc">
+                        Kehribar Medya (<strong>kehribardergisi.com</strong>); Türkiye'nin ve dünyanın önde gelen ulusal gazetelerini, bağımsız internet haber sitelerini, resmi televizyon ve radyo canlı yayınlarını, anlık finans verilerini ve kamu yaşam servislerini tek bir çatıda buluşturan, tarafsız ve kullanıcı odaklı bir dijital basın rehberidir.
+                    </p>
+                </div>
+
+                <div class="portal-info-grid">
+                    <div class="info-col" id="yayin-ilkeleri">
+                        <div class="info-col-icon">📰</div>
+                        <h3>Yayın İlkeleri & Tarafsızlık</h3>
+                        <p>
+                            Kehribar Medya çoğulcu basın anlayışını benimser. Toplumun her kesimine hitap eden resmi ve bağımsız basın kaynaklarına eşit mesafede erişim bağlantıları sunar.
+                        </p>
+                    </div>
+                    <div class="info-col" id="telif-haklari">
+                        <div class="info-col-icon">⚖️</div>
+                        <h3>Telif Hakları & Dış Bağlantılar</h3>
+                        <p>
+                            Sitemizde yer alan tüm gazete, televizyon ve radyo bağlantıları doğrudan ilgili kurumların resmi web sitelerine yönlendirme yapar. İçeriklerin tüm fikri mülkiyet hakları kaynak yayıncılara aittir.
+                        </p>
+                    </div>
+                    <div class="info-col" id="kullanim-sartlari">
+                        <div class="info-col-icon">🛡️</div>
+                        <h3>Veri Güvenliği & Şeffaflık</h3>
+                        <p>
+                            Ziyaretçilerimizin gizliliğine ve kişisel verilerine saygı duyuyoruz. Sitemiz 6698 sayılı KVKK ve GDPR ilkelerine uygun olarak çerez politikalarını şeffaf bir şekilde yönetir.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="portal-info-footer">
+                    <div class="info-links-row">
+                        <a href="gizlilik-politikasi.html" class="info-pill-btn">🔒 Gizlilik & Çerez Politikası</a>
+                        <a href="gizlilik-politikasi.html#kullanim-kosullari" class="info-pill-btn">📜 Kullanım Koşulları</a>
+                        <a href="https://msoftis.blogspot.com/p/iletisim.html" target="_blank" rel="noopener noreferrer" class="info-pill-btn">📬 İletişim & Künye</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- FOOTER -->
@@ -1104,7 +1149,13 @@
             <div class="footer-meta">
                 <p>&copy; 2026 Kehribardergisi.com. Tüm hakları saklıdır. <span class="sep">•</span> <a href="https://msoftis.github.io/page/" target="_blank" rel="noopener noreferrer" class="msoftis-credit-link" title="Msoftis Portfolyo & Web">Msoftis❤️</a></p>
                 <div class="footer-links">
-                    <a href="https://msoftis.blogspot.com/p/iletisim.html" target="_blank" rel="noopener noreferrer">İletişim & Reklam</a>
+                    <a href="gizlilik-politikasi.html">Gizlilik & Çerez Politikası</a>
+                    <span class="sep">•</span>
+                    <a href="#hakkimizda">Hakkımızda</a>
+                    <span class="sep">•</span>
+                    <a href="#yayin-ilkeleri">Yayın İlkeleri</a>
+                    <span class="sep">•</span>
+                    <a href="https://msoftis.blogspot.com/p/iletisim.html" target="_blank" rel="noopener noreferrer">İletişim</a>
                     <span class="sep">•</span>
                     <a href="#ulusal-gazeteler">Gazeteler</a>
                     <span class="sep">•</span>
@@ -1217,6 +1268,18 @@
                     <span class="btn-arrow">→</span>
                 </a>
                 <span class="sale-guarantee-note">🔒 Güvenli işlem. Tıkladığınızda mesajınız doğrudan site sahibine iletilir.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÇEREZ ONAY BİLDİRİMİ (COOKIE CONSENT) -->
+    <div id="cookie-consent-banner" class="cookie-consent-bar" style="display: none;">
+        <div class="container cookie-inner">
+            <div class="cookie-text">
+                <span>🍪 Sitemizde kullanıcı deneyimini iyileştirmek ve reklam hizmetlerini optimize etmek amacıyla çerezler (cookies) kullanılmaktadır. Detaylı bilgi için <a href="gizlilik-politikasi.html">Gizlilik ve Çerez Politikamızı</a> inceleyebilirsiniz.</span>
+            </div>
+            <div class="cookie-actions">
+                <button type="button" id="cookie-accept-btn" class="cookie-accept-btn">Anladım ve Kabul Ediyorum</button>
             </div>
         </div>
     </div>
