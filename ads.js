@@ -34,18 +34,19 @@ const ADS_CONFIG = {
     // ------------------------------------------------------------------------
     topLeaderboard: {
         enabled: true, // true: Göster, false: Gizle
-        type: "banner", // "banner", "adsense" veya "custom"
+        type: "adsense", // "banner", "adsense" veya "custom"
         
         // AdSense Tercihi:
-        adsenseSlot: "1234567890",
+        adsenseSlot: "7887510058",
         adsenseFormat: "horizontal",
+        adsenseStyle: "display:inline-block;width:728px;height:90px",
 
         // Özel Görsel & Link Banner Tercihi:
         banner: {
             imageUrl: "img/728x90.gif", // 728x90 GIF Reklam Görseli
             targetUrl: "https://msoftis.blogspot.com/p/iletisim.html",
             altText: "Kehribar Dergisi Üst Reklam Alanı (728x90)",
-            tagText: "REKLAM / SPONSOR (728x90)",
+            tagText: "REKLAM (728x90)",
             titleText: "Google AdSense & Sponsor Üst Banner Alanı",
             subText: "Sayfanın en yüksek tıklanma oranına sahip 728x90 üst reklam bölgesi",
             ctaText: "Reklam Ver & İletişim ↗"
@@ -107,16 +108,17 @@ const ADS_CONFIG = {
     // ------------------------------------------------------------------------
     bottomLeaderboard: {
         enabled: true,
-        type: "banner", // "banner", "adsense" veya "custom"
+        type: "adsense", // "banner", "adsense" veya "custom"
 
-        adsenseSlot: "9988776655",
+        adsenseSlot: "7887510058",
         adsenseFormat: "horizontal",
+        adsenseStyle: "display:inline-block;width:728px;height:90px",
 
         banner: {
             imageUrl: "img/728x90.gif", // 728x90 GIF Reklam Görseli
             targetUrl: "https://msoftis.blogspot.com/p/iletisim.html",
             altText: "Kehribar Dergisi Alt Reklam Alanı",
-            tagText: "REKLAM / SPONSOR (728x90 FOOTER BANNER)",
+            tagText: "REKLAM (728x90 FOOTER BANNER)",
             titleText: "Google AdSense Alt Yatay Reklam Alanı",
             subText: "Sayfa sonu kullanıcı etkileşimi için optimize edilmiş 728x90 / 970x90 alanı",
             ctaText: "Buraya Reklam Ver ↗"
@@ -328,6 +330,7 @@ const ADS_CONFIG = {
             const client = ADS_CONFIG.googleAdsense.client;
             const slot = cfg.adsenseSlot || '';
             const format = cfg.adsenseFormat || 'auto';
+            const style = cfg.adsenseStyle || 'display:block';
             const layoutKey = cfg.adsenseLayoutKey ? `data-ad-layout-key="${cfg.adsenseLayoutKey}"` : '';
 
             return `
@@ -335,7 +338,7 @@ const ADS_CONFIG = {
                     <div class="ad-tag">${tag}</div>
                     <div class="ad-content ${contentClass}">
                         <ins class="adsbygoogle"
-                             style="display:block"
+                             style="${style}"
                              data-ad-client="${client}"
                              data-ad-slot="${slot}"
                              data-ad-format="${format}"
@@ -379,7 +382,7 @@ const ADS_CONFIG = {
     }
 
     function triggerAdsenseIfNeeded(cfg) {
-        if (cfg.type === 'adsense' && ADS_CONFIG.googleAdsense.enabled && window.adsbygoogle) {
+        if (cfg.type === 'adsense' && ADS_CONFIG.googleAdsense && ADS_CONFIG.googleAdsense.enabled) {
             try {
                 (window.adsbygoogle = window.adsbygoogle || []).push({});
             } catch (e) {

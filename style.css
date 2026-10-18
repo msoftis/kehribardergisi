@@ -858,6 +858,13 @@ body[data-theme="dark"] .search-input-wrapper:focus-within {
     min-height: 90px;
     width: 100%;
     max-width: 728px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ad-728x90 ins.adsbygoogle {
+    max-width: 100% !important;
 }
 
 .ad-300x250 {
