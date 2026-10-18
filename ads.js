@@ -44,7 +44,7 @@ const ADS_CONFIG = {
         banner: {
             imageUrl: "img/728x90.gif", // 728x90 GIF Reklam Görseli
             targetUrl: "https://msoftis.blogspot.com/p/iletisim.html",
-            altText: "Kehribar Medya Üst Reklam Alanı (728x90)",
+            altText: "Kehribar Dergisi Üst Reklam Alanı (728x90)",
             tagText: "REKLAM / SPONSOR (728x90)",
             titleText: "Google AdSense & Sponsor Üst Banner Alanı",
             subText: "Sayfanın en yüksek tıklanma oranına sahip 728x90 üst reklam bölgesi",
@@ -68,7 +68,7 @@ const ADS_CONFIG = {
         banner: {
             imageUrl: "img/300x250.gif", // 300x250 GIF Reklam Görseli
             targetUrl: "https://msoftis.blogspot.com/p/iletisim.html",
-            altText: "Kehribar Medya 300x250 Reklam Alanı",
+            altText: "Kehribar Dergisi 300x250 Reklam Alanı",
             tagText: "SPONSOR / REKLAM (300x250)",
             titleText: "300x250 Kare Reklam Alanı",
             subText: "Haber ve medya kutucukları arasında yüksek etkileşimli reklam alanı",
@@ -92,7 +92,7 @@ const ADS_CONFIG = {
         banner: {
             imageUrl: "img/728x90.gif", // 728x90 GIF Reklam Görseli
             targetUrl: "https://msoftis.blogspot.com/p/iletisim.html",
-            altText: "Kehribar Medya Akış İçi Reklam Bannerı",
+            altText: "Kehribar Dergisi Akış İçi Reklam Bannerı",
             tagText: "SPONSORLU / IN-FEED BANNER",
             titleText: "Google AdSense Yatay Akış İçi Reklam Alanı",
             subText: "Kullanıcı akışına uyumlu, geniş formatlı yatay geçiş bannerı",
@@ -115,7 +115,7 @@ const ADS_CONFIG = {
         banner: {
             imageUrl: "img/728x90.gif", // 728x90 GIF Reklam Görseli
             targetUrl: "https://msoftis.blogspot.com/p/iletisim.html",
-            altText: "Kehribar Medya Alt Reklam Alanı",
+            altText: "Kehribar Dergisi Alt Reklam Alanı",
             tagText: "REKLAM / SPONSOR (728x90 FOOTER BANNER)",
             titleText: "Google AdSense Alt Yatay Reklam Alanı",
             subText: "Sayfa sonu kullanıcı etkileşimi için optimize edilmiş 728x90 / 970x90 alanı",
@@ -138,7 +138,7 @@ const ADS_CONFIG = {
             imageUrl: "img/728x90.gif", // 728x90 GIF Reklam Görseli
             targetUrl: "https://msoftis.blogspot.com/p/iletisim.html",
             tagText: "SPONSORLU / AD",
-            titleText: "Kehribar Medya Reklam Alanı",
+            titleText: "Kehribar Dergisi Reklam Alanı",
             subText: "Google AdSense 728x90 / 320x50 veya Sabit Alt Sponsor Bannerı",
             ctaText: "İletişim & Reklam ↗"
         },

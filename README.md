@@ -1,4 +1,4 @@
-# Kehribar Medya Portalı (Kehribardergisi.com)
+# Kehribar Dergisi Portalı (Kehribardergisi.com)
 
 > **Tüm Gazeteler, Haber Siteleri, Canlı TV ve Radyolara Tek Sayfadan En Hızlı Erişim Kısayolu**
 
