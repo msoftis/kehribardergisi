@@ -1,0 +1,30 @@
+# ==============================================================================
+# KEHRİBAR MEDYA - ROBOTS.TXT
+# Googlebot ve diğer arama motoru botları için tarama talimatları
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+
+# Bot Tarama Hızı ve Öncelikli Arama Motorları
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /img/
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.gif$
+Allow: /*.svg$
+
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# XML Site Haritası (Sitemap)
+Sitemap: https://kehribardergisi.com/sitemap.xml

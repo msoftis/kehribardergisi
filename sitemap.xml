@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  <url>
+    <loc>https://kehribardergisi.com/</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>always</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://kehribardergisi.com/logo.svg</image:loc>
+      <image:title>Kehribar Medya Portalı Logosu</image:title>
+      <image:caption>Türkiye ve Dünya Haber, Gazete, TV ve Radyo Portalı</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://kehribardergisi.com/link.png</image:loc>
+      <image:title>Kehribar Medya İkonu</image:title>
+    </image:image>
+  </url>
+</urlset>
