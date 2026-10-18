@@ -3082,3 +3082,350 @@ body[data-theme="dark"] .drawer-logo-img {
     }
 }
 
+/* ==========================================================================
+   INSTAGRAM RESMİ VİTRİN BÖLÜMÜ (@kehribardergisi)
+   ========================================================================== */
+.instagram-showcase-section {
+    margin-bottom: 14px;
+}
+
+.instagram-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 16px 18px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+}
+
+.instagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 14px;
+}
+
+.insta-profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.insta-avatar-ring {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    padding: 2.5px;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.insta-avatar-ring:hover {
+    transform: scale(1.05);
+}
+
+.insta-avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ffffff;
+    border: 2px solid var(--bg-card);
+}
+
+.insta-live-badge {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    background: #e1306c;
+    color: #ffffff;
+    font-size: 0.58rem;
+    font-weight: 800;
+    padding: 1px 4px;
+    border-radius: 4px;
+    border: 1.5px solid var(--bg-card);
+    line-height: 1;
+}
+
+.insta-user-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.insta-name-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.insta-username {
+    font-weight: 800;
+    font-size: 0.98rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: -0.2px;
+}
+
+.insta-username:hover {
+    color: #e1306c;
+}
+
+.insta-verified {
+    background: #3897f0;
+    color: #ffffff;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    font-size: 0.65rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.insta-sub-badge {
+    background: var(--brand-amber-soft);
+    color: var(--brand-amber);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 999px;
+}
+
+.insta-bio {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.insta-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.insta-follow-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #ffffff !important;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(220, 39, 67, 0.25);
+    transition: all 0.2s ease;
+}
+
+.insta-follow-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(220, 39, 67, 0.4);
+    opacity: 0.95;
+}
+
+.insta-icon {
+    flex-shrink: 0;
+}
+
+/* Post Izgarası */
+.insta-feed-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.insta-post-card {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    padding: 16px 14px;
+    min-height: 135px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid var(--border-color);
+    color: #ffffff;
+}
+
+.card-gradient-1 {
+    background: linear-gradient(135deg, #2e0854, #8b5cf6);
+}
+
+.card-gradient-2 {
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+}
+
+.card-gradient-3 {
+    background: linear-gradient(135deg, #09203f, #537895);
+}
+
+.card-gradient-4 {
+    background: linear-gradient(135deg, #d31027, #ea384d);
+}
+
+.insta-post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.insta-post-content {
+    position: relative;
+    z-index: 1;
+}
+
+.insta-post-type {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    opacity: 0.95;
+    margin-bottom: 6px;
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    padding: 2px 7px;
+    border-radius: 4px;
+}
+
+.insta-post-title {
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.insta-post-desc {
+    font-size: 0.77rem;
+    opacity: 0.92;
+    line-height: 1.45;
+    margin: 0;
+    color: #f1f5f9;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.insta-post-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    padding: 12px;
+    text-align: center;
+    z-index: 2;
+}
+
+.insta-post-card:hover .insta-post-overlay {
+    opacity: 1;
+}
+
+.insta-overlay-stat {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #f8fafc;
+}
+
+.insta-overlay-btn {
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-top: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.insta-footer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: var(--bg-card-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.insta-footer-text {
+    flex: 1;
+    min-width: 240px;
+}
+
+.insta-view-profile-link {
+    font-weight: 700;
+    color: var(--brand-amber);
+    text-decoration: none;
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.insta-view-profile-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+    .insta-feed-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .instagram-card {
+        padding: 12px 14px;
+    }
+    .insta-feed-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .insta-post-card {
+        min-height: 110px;
+        padding: 12px;
+    }
+    .insta-follow-btn {
+        padding: 6px 12px;
+        font-size: 0.78rem;
+    }
+    .insta-footer-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+    .insta-view-profile-link {
+        margin-left: 0;
+    }
+}
+
+
