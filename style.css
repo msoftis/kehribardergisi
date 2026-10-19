@@ -3486,4 +3486,661 @@ body[data-theme="dark"] .search-input-wrapper:focus-within {
     }
 }
 
+/* ==========================================================================
+   KAMU VE İŞ İLANLARI MERKEZİ STİLLERİ (RESMİ GAZETE, MEMURLAR.NET, İŞKUR)
+   ========================================================================== */
+.job-portal-card {
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    border-radius: var(--radius-md);
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.job-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, rgba(217, 119, 6, 0.08), rgba(245, 158, 11, 0.03));
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.job-head-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.job-main-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.job-time-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 4px 10px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.job-time-badge::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #10b981;
+    animation: livePulse 2s infinite;
+}
+
+/* Resmi Portallar Hızlı Şerit Butonları */
+.job-official-portals {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    padding: 14px 18px;
+    background-color: var(--bg-card-subtle);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.portal-badge-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.portal-badge-btn::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: var(--brand-amber);
+    transition: width 0.2s ease;
+}
+
+.portal-badge-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--brand-amber);
+}
+
+.portal-badge-btn:hover::before {
+    width: 5px;
+}
+
+.portal-badge-btn.rg-badge::before { background-color: #dc2626; }
+.portal-badge-btn.cbiko-badge::before { background-color: #d97706; }
+.portal-badge-btn.sbb-badge::before { background-color: #2563eb; }
+.portal-badge-btn.bik-badge::before { background-color: #059669; }
+.portal-badge-btn.memurlar-badge::before { background-color: #7c3aed; }
+.portal-badge-btn.iskur-badge::before { background-color: #0284c7; }
+
+.portal-badge-btn .p-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.portal-badge-btn .p-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.portal-badge-btn .p-text strong {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.portal-badge-btn .p-text small {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.portal-badge-btn .p-arrow {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    opacity: 0.6;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.portal-badge-btn:hover .p-arrow {
+    opacity: 1;
+    transform: translate(2px, -2px);
+    color: var(--brand-amber);
+}
+
+/* İlan Toolbar (Filtre Sekmeleri + Canlı Arama Kutusu) */
+.job-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.job-filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.job-tab {
+    background: var(--bg-card-subtle);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.job-tab:hover {
+    color: var(--text-primary);
+    border-color: var(--brand-amber);
+    background-color: rgba(217, 119, 6, 0.08);
+}
+
+.job-tab.active {
+    background: var(--brand-amber);
+    color: #ffffff;
+    border-color: var(--brand-amber);
+    font-weight: 700;
+}
+
+.job-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 260px;
+    flex: 1;
+    max-width: 380px;
+}
+
+.job-search-icon {
+    position: absolute;
+    left: 10px;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.job-search-input {
+    width: 100%;
+    padding: 7px 30px 7px 32px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-card-subtle);
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.job-search-input:focus {
+    border-color: var(--brand-amber);
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+    background-color: var(--bg-card);
+}
+
+.job-search-clear {
+    position: absolute;
+    right: 8px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 2px 6px;
+    line-height: 1;
+}
+
+/* İlan Kartları Grid Alanı */
+.job-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
+    padding: 16px 18px;
+    background-color: var(--bg-card);
+}
+
+/* Tekil İlan Kartı */
+.job-item-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background-color: var(--bg-card-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+}
+
+.job-item-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--brand-amber);
+    background-color: var(--bg-card);
+}
+
+.job-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.job-source-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.2px;
+    display: inline-block;
+}
+
+.job-source-badge.badge-rg {
+    background-color: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+    border: 1px solid rgba(220, 38, 38, 0.25);
+}
+
+.job-source-badge.badge-memurlar {
+    background-color: rgba(124, 58, 237, 0.1);
+    color: #7c3aed;
+    border: 1px solid rgba(124, 58, 237, 0.25);
+}
+
+.job-source-badge.badge-iskur {
+    background-color: rgba(2, 132, 199, 0.1);
+    color: #0284c7;
+    border: 1px solid rgba(2, 132, 199, 0.25);
+}
+
+.job-source-badge.badge-cbiko {
+    background-color: rgba(217, 119, 6, 0.1);
+    color: #d97706;
+    border: 1px solid rgba(217, 119, 6, 0.25);
+}
+
+.job-source-badge.badge-ozel {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #059669;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.job-date-text {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.job-item-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.35;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.job-item-institution {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--brand-amber);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.job-item-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.job-tag {
+    font-size: 0.7rem;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.job-tag.tag-city {
+    color: #2563eb;
+    background: rgba(37, 99, 235, 0.06);
+    border-color: rgba(37, 99, 235, 0.18);
+}
+
+.job-tag.tag-count {
+    color: #059669;
+    background: rgba(5, 150, 105, 0.06);
+    border-color: rgba(5, 150, 105, 0.18);
+    font-weight: 700;
+}
+
+.job-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border-color);
+    font-size: 0.76rem;
+    margin-top: auto;
+}
+
+.job-deadline {
+    color: #dc2626;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.job-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--brand-amber);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.job-item-card:hover .job-action-btn {
+    text-decoration: underline;
+}
+
+/* Boş Arama / Eşleşme Yok Durumu */
+.job-empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 36px 20px;
+    color: var(--text-muted);
+}
+
+.job-empty-state .empty-icon {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+}
+
+/* Hızlı Kariyer Arama Kısayolları Şeridi */
+.job-quick-links-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    background-color: var(--bg-card-subtle);
+    border-top: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+}
+
+.job-quick-label {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-right: 4px;
+}
+
+.job-pill-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.job-pill-link:hover {
+    color: var(--brand-amber);
+    border-color: var(--brand-amber);
+    background-color: rgba(217, 119, 6, 0.08);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .job-official-portals {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 10px 12px;
+    }
+    .job-cards-grid {
+        grid-template-columns: 1fr;
+        padding: 12px;
+    }
+    .job-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px;
+    }
+    .job-search-box {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    .job-filter-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+    }
+    .job-tab {
+        white-space: nowrap;
+    }
+}
+
+/* ==========================================================================
+   GÜNÜN MANŞETLERİ ALANI (HIZLI ERİŞİM ALTI: SOL HABER, SAĞ GAZETE)
+   ========================================================================== */
+.manset-dual-section {
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+
+.manset-dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: stretch;
+}
+
+.manset-column-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+}
+
+.manset-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background-color: var(--bg-card-subtle);
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.manset-head-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.manset-head-title h3 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.manset-head-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.manset-source-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 2px 7px;
+    border-radius: 4px;
+}
+
+/* İframe Taşıyıcıları */
+.manset-iframe-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 8px;
+    background-color: var(--bg-card);
+    overflow: hidden;
+    min-height: 380px;
+}
+
+/* Sol Sütun: Haber Manşeti Ölçekleyici (Sıra Numaraları Net Görünür) */
+.manset-scaler-haber {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.manset-scaler-haber iframe {
+    width: 660px;
+    height: 435px;
+    border: none;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    background-color: #ffffff;
+    transform: scale(0.88);
+    transform-origin: center center;
+    margin: -24px 0;
+    display: block;
+}
+
+/* Sağ Sütun: Gazete Manşetleri (1. Sayfalar) */
+.manset-scaler-gazete {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.manset-scaler-gazete iframe {
+    width: 100%;
+    min-height: 660px;
+    height: 660px;
+    border: none;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    background-color: #ffffff;
+    display: block;
+}
+
+/* Responsive Düzenler */
+@media (max-width: 1100px) {
+    .manset-scaler-haber iframe {
+        transform: scale(0.78);
+        margin: -46px 0;
+    }
+}
+
+@media (max-width: 960px) {
+    .manset-dual-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .manset-scaler-haber iframe {
+        transform: scale(0.9);
+        margin: -20px 0;
+    }
+    .manset-scaler-gazete iframe {
+        height: 660px;
+        min-height: 660px;
+    }
+}
+
+@media (max-width: 680px) {
+    .manset-scaler-haber iframe {
+        transform: scale(0.72);
+        margin: -58px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .manset-scaler-haber iframe {
+        transform: scale(0.55);
+        margin: -95px 0;
+    }
+}
+
+
+
+
 

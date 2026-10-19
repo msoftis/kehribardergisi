@@ -28,6 +28,7 @@ Referans model: [gazeteler.com](http://www.gazeteler.com/) konsepti ile modern, 
    - **📈 Ekonomi & Finans:** Dünya/Ekonomim, Bloomberg HT, Uzmanpara, Bigpara, Investing vb.
    - **🌐 Başlıca Yabancı Basın:** BBC, CNN, Reuters, NYT, The Guardian, Der Spiegel, Le Monde, Al Jazeera vb.
    - **📍 81 İl Yerel Medya Fihristi:** Şehir seçici dropdown ve popüler büyükşehir yerel gazeteleri.
+   - **👔 Güncel Kamu & İş İlanları:** T.C. Resmî Gazete Çeşitli İlanlar, Memurlar.Net KPSS alımları, CBİKO Kariyer Kapısı, SBB Kamu İlan, İŞKUR ve Özel Sektör iş ilanları (canlı filtreleme, kategori sekmeleri ve doğrudan resmi başvuru bağlantıları).
    - **🔗 Resmi ve Yararlı Linkler:** e-Devlet, ÖSYM, Meteoroloji, BIST, TCMB vb.
 
 4. **Google AdSense Gelir Optimizasyonu:**

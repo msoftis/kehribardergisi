@@ -177,6 +177,12 @@
               "position": 13,
               "name": "TV Rehberi",
               "url": "https://kehribardergisi.com/#tv-rehberi"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 14,
+              "name": "Kamu ve İş İlanları",
+              "url": "https://kehribardergisi.com/#is-ve-kamu-ilanlari"
             }
           ]
         }
@@ -198,12 +204,14 @@
             <div class="ticker-date" id="current-date">Yükleniyor...</div>
             <div class="ticker-links">
                 <span class="ticker-badge">Hızlı Erişim:</span>
+                <a href="#gazete-mansetleri" style="font-weight: 700;">🗞️ Manşetler</a>
                 <a href="#ulusal-gazeteler">Gazeteler</a>
                 <a href="#haber-siteleri">Haber Siteleri</a>
                 <a href="#spor-basini">Spor</a>
                 <a href="#canli-tv">Canlı TV</a>
                 <a href="#radyolar">Radyolar</a>
                 <a href="#ekonomi">Ekonomi</a>
+                <a href="#is-ve-kamu-ilanlari" style="color: #f59e0b; font-weight: 700;">👔 Kamu & İş İlanları</a>
                 <a href="#dunya-basini">Dünya</a>
                 <a href="#yerel-basin">Yerel Medya</a>
                 <a href="#canli-rss" style="color: #ef4444; font-weight: 700;">🔴 Canlı RSS</a>
@@ -309,6 +317,7 @@
                 <h4>Medya Kategorileri</h4>
                 <ul class="drawer-nav">
                     <li><a href="#populer" class="drawer-link"><span class="nav-ico">⭐</span> En Popüler Kısayollar</a></li>
+                    <li><a href="#gazete-mansetleri" class="drawer-link"><span class="nav-ico">🗞️</span> Günün Gazete Manşetleri</a></li>
                     <li><a href="#ulusal-gazeteler" class="drawer-link"><span class="nav-ico">📰</span> Ulusal Gazeteler</a></li>
                     <li><a href="#haber-siteleri" class="drawer-link"><span class="nav-ico">⚡</span> İnternet Haber Medyası</a></li>
                     <li><a href="#spor-basini" class="drawer-link"><span class="nav-ico">⚽</span> Spor Gazeteleri & Siteleri</a></li>
@@ -318,6 +327,7 @@
                     <li><a href="#dunya-basini" class="drawer-link"><span class="nav-ico">🌐</span> Başlıca Yabancı Basın</a></li>
                     <li><a href="#yerel-basin" class="drawer-link"><span class="nav-ico">📍</span> 81 İl Yerel Medya Fihristi</a></li>
                     <li><a href="#yararli-linkler" class="drawer-link"><span class="nav-ico">🔗</span> Yararlı Linkler & Resmi Siteler</a></li>
+                    <li><a href="#is-ve-kamu-ilanlari" class="drawer-link" style="color: #d97706; font-weight: 700;"><span class="nav-ico">👔</span> Kamu & İş İlanları Portalı</a></li>
                     <li><a href="#canli-rss" class="drawer-link" style="color: #ef4444; font-weight: 700;"><span class="nav-ico">🔴</span> Canlı RSS Haber Akışı</a></li>
                     <li><a href="#namaz-vakitleri" class="drawer-link"><span class="nav-ico">🕌</span> Namaz Vakitleri</a></li>
                     <li><a href="#hava-durumu" class="drawer-link"><span class="nav-ico">⛅</span> Hava Durumu</a></li>
@@ -369,6 +379,7 @@
     <nav class="category-nav-bar">
         <div class="container category-chips">
             <button class="chip active" data-filter="all">Tümü</button>
+            <button class="chip" data-filter="manset">🗞️ Manşetler</button>
             <button class="chip" data-filter="gazeteler">Gazeteler</button>
             <button class="chip" data-filter="haberler">Haber Siteleri</button>
             <button class="chip" data-filter="spor">Spor</button>
@@ -378,6 +389,7 @@
             <button class="chip" data-filter="yabanci">Dünya Basını</button>
             <button class="chip" data-filter="yerel">Yerel Basın</button>
             <button class="chip" data-filter="yararli">Faydalı Linkler</button>
+            <button class="chip chip-job" data-filter="ilanlar" style="border-color: #d97706; color: #d97706; font-weight: 700;">👔 Kamu & İş İlanları</button>
             <button class="chip chip-rss" data-filter="rss" style="border-color: #ef4444; color: #ef4444; font-weight: 700;">🔴 Canlı RSS</button>
             <button class="chip" data-filter="namaz">🕌 Namaz</button>
             <button class="chip" data-filter="hava">⛅ Hava</button>
@@ -518,6 +530,70 @@
                 <a href="https://www.odatv.com/" target="_blank" rel="noopener noreferrer" class="quick-pill"><span class="dot amber"></span>OdaTV</a>
                 <a href="https://www.bloomberght.com/" target="_blank" rel="noopener noreferrer" class="quick-pill"><span class="dot purple"></span>Bloomberg HT</a>
                 <a href="https://www.bbc.com/turkce" target="_blank" rel="noopener noreferrer" class="quick-pill"><span class="dot red"></span>BBC Türkçe</a>
+            </div>
+        </section>
+
+        <!-- GÜNÜN MANŞETLERİ BÖLÜMÜ (HIZLI ERİŞİM ALTI: SOL HABER MANŞETLERİ, SAĞ GAZETE MANŞETLERİ) -->
+        <section id="gazete-mansetleri" class="manset-dual-section" data-category="manset">
+            <div class="manset-dual-grid">
+
+                <!-- SOL SÜTUN: HABER MANŞETLERİ -->
+                <div class="portal-card manset-column-card">
+                    <div class="card-head manset-card-head">
+                        <div class="manset-head-title">
+                            <span class="card-icon">⚡</span>
+                            <div>
+                                <h3>Günün Haber Manşetleri</h3>
+                                <span class="card-subtext">Son dakika ve internet basını öne çıkan manşetleri</span>
+                            </div>
+                        </div>
+                        <div class="manset-head-actions">
+                            <span class="live-pulse-badge">CANLI HABER</span>
+                        </div>
+                    </div>
+                    <div class="manset-iframe-wrapper">
+                        <div class="manset-scaler-haber">
+                            <iframe 
+                                src="https://www.gazeteoku.com/siteneekle/mansetler.html" 
+                                width="660" 
+                                height="430" 
+                                scrolling="no" 
+                                frameborder="0" 
+                                title="Günün Haber Manşetleri" 
+                                loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SAĞ SÜTUN: GAZETE MANŞETLERİ (1. SAYFALAR) -->
+                <div class="portal-card manset-column-card">
+                    <div class="card-head manset-card-head">
+                        <div class="manset-head-title">
+                            <span class="card-icon">📰</span>
+                            <div>
+                                <h3>Gazete Manşetleri (1. Sayfalar)</h3>
+                                <span class="card-subtext">Ulusal basının bugünkü gazete birinci sayfaları</span>
+                            </div>
+                        </div>
+                        <div class="manset-head-actions">
+                            <span class="manset-source-badge">GazeteOku</span>
+                            <span class="live-pulse-badge">GÜNLÜK BASIN</span>
+                        </div>
+                    </div>
+                    <div class="manset-iframe-wrapper">
+                        <div class="manset-scaler-gazete">
+                            <iframe 
+                                src="https://www.gazeteoku.com/siteneekle/gmansetleri.html" 
+                                width="100%" 
+                                height="660" 
+                                scrolling="no" 
+                                frameborder="0" 
+                                title="Gazete Manşetleri 1. Sayfalar" 
+                                loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -908,6 +984,117 @@
             <!-- RSS Bilgilendirme Notu -->
             <div class="rss-footer-note">
                 <span>⚡ Haber başlıkları ulusal gazeteler ve ajansların resmi RSS beslemeleri üzerinden anlık olarak listelenmektedir. Haberin tamamına ulaşmak için başlığa tıklayınız.</span>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             KAMU VE İŞ İLANLARI MERKEZİ (RESMİ GAZETE, MEMURLAR.NET, İŞKUR, KARİYER KAPISI)
+             ============================================================ -->
+        <section id="is-ve-kamu-ilanlari" class="portal-card job-portal-card mt-section" data-category="ilanlar">
+            <div class="card-head job-card-head">
+                <div class="job-head-left">
+                    <span class="card-icon">👔</span>
+                    <div>
+                        <h3 class="job-main-title">GÜNCEL KAMU VE İŞ İLANLARI MERKEZİ</h3>
+                        <span class="card-subtext">Resmî Gazete Çeşitli İlanlar, Memurlar.Net, CBİKO Kariyer Kapısı, İŞKUR ve Özel Sektör Alımları</span>
+                    </div>
+                </div>
+                <div class="job-head-actions">
+                    <span id="job-updated-badge" class="job-time-badge">Günlük Resmî İlanlar Aktif</span>
+                    <button id="job-refresh-btn" class="rss-refresh-btn" title="İlanları Yenile">↻ Yenile</button>
+                </div>
+            </div>
+
+            <!-- RESMİ BAŞVURU PORTALLARI HIZLI ERİŞİM ŞERİDİ -->
+            <div class="job-official-portals">
+                <a id="rg-today-link" href="https://www.resmigazete.gov.tr/" target="_blank" rel="noopener noreferrer" class="portal-badge-btn rg-badge" title="Günün Resmî Gazetesi Çeşitli İlanlar (Memur & Akademik Alımlar)">
+                    <span class="p-icon">📜</span>
+                    <span class="p-text">
+                        <strong>Bugünkü Resmî Gazete İlanları</strong>
+                        <small>Memur & Akademik Alımlar</small>
+                    </span>
+                    <span class="p-arrow">↗</span>
+                </a>
+                <a href="https://isealimkariyerkapisi.cbiko.gov.tr/" target="_blank" rel="noopener noreferrer" class="portal-badge-btn cbiko-badge" title="Cumhurbaşkanlığı Kariyer Kapısı Kamu İşe Alım">
+                    <span class="p-icon">🏛️</span>
+                    <span class="p-text">
+                        <strong>CBİKO Kariyer Kapısı</strong>
+                        <small>Merkezi Kamu İşe Alım</small>
+                    </span>
+                    <span class="p-arrow">↗</span>
+                </a>
+                <a href="https://kamuilan.sbb.gov.tr/" target="_blank" rel="noopener noreferrer" class="portal-badge-btn sbb-badge" title="Strateji ve Bütçe Başkanlığı Kamu İlan Portalı">
+                    <span class="p-icon">📢</span>
+                    <span class="p-text">
+                        <strong>SBB Kamu İlan Sistemi</strong>
+                        <small>Bakanlık & Kurum Alımları</small>
+                    </span>
+                    <span class="p-arrow">↗</span>
+                </a>
+                <a href="https://www.ilan.gov.tr/kategori/ilan/kamu-akademik-personel-sinav-duyurulari" target="_blank" rel="noopener noreferrer" class="portal-badge-btn bik-badge" title="ilan.gov.tr Basın İlan Kurumu Personel Alımları">
+                    <span class="p-icon">📰</span>
+                    <span class="p-text">
+                        <strong>ilan.gov.tr (BİK)</strong>
+                        <small>Resmî Sınav & Personel İlanları</small>
+                    </span>
+                    <span class="p-arrow">↗</span>
+                </a>
+                <a href="https://ilan.memurlar.net/" target="_blank" rel="noopener noreferrer" class="portal-badge-btn memurlar-badge" title="Memurlar.Net Güncel İlan Portalı">
+                    <span class="p-icon">📑</span>
+                    <span class="p-text">
+                        <strong>Memurlar.Net İlanlar</strong>
+                        <small>KPSS, Sözleşmeli & 4/B</small>
+                    </span>
+                    <span class="p-arrow">↗</span>
+                </a>
+                <a href="https://esube.iskur.gov.tr/Istihdam/AcikIsIlanAra.aspx" target="_blank" rel="noopener noreferrer" class="portal-badge-btn iskur-badge" title="İŞKUR Açık İş İlanları & TYP">
+                    <span class="p-icon">💼</span>
+                    <span class="p-text">
+                        <strong>İŞKUR e-Şube</strong>
+                        <small>Sürekli İşçi & TYP İlanları</small>
+                    </span>
+                    <span class="p-arrow">↗</span>
+                </a>
+            </div>
+
+            <!-- İLANLAR FİLTRE VE ARAMA ÇUBUĞU -->
+            <div class="job-toolbar">
+                <div class="job-filter-tabs">
+                    <button class="job-tab active" data-job-filter="all">Tüm İlanlar (<span id="job-count-all">0</span>)</button>
+                    <button class="job-tab" data-job-filter="kamu">🏛️ Kamu & Memur</button>
+                    <button class="job-tab" data-job-filter="resmigazete">📜 Resmî Gazete</button>
+                    <button class="job-tab" data-job-filter="memurlar">📋 Memurlar.Net / KPSS</button>
+                    <button class="job-tab" data-job-filter="iskur">👷 İŞKUR & İşçi</button>
+                    <button class="job-tab" data-job-filter="akademik">🎓 Üniversite & Akademik</button>
+                    <button class="job-tab" data-job-filter="ozel">🏢 Özel Sektör</button>
+                </div>
+                <div class="job-search-box">
+                    <span class="job-search-icon">🔍</span>
+                    <input type="text" id="job-search-input" class="job-search-input" placeholder="Kurum, şehir, kadro unvanı veya KPSS ara..." autocomplete="off">
+                    <button type="button" id="job-search-clear" class="job-search-clear" style="display: none;">✕</button>
+                </div>
+            </div>
+
+            <!-- İLAN KARTLARI LİSTESİ -->
+            <div class="job-cards-grid" id="job-cards-container">
+                <!-- main.js tarafından dinamik render edilecek -->
+            </div>
+
+            <!-- POPÜLER İŞ ARAMA PORTALLARI HIZLI BAĞLANTILARI -->
+            <div class="job-quick-links-row">
+                <span class="job-quick-label">🔍 Popüler Kariyer & İş Arama Kısayolları:</span>
+                <a href="https://www.kariyer.net/" target="_blank" rel="noopener noreferrer" class="job-pill-link">Kariyer.net</a>
+                <a href="https://www.eleman.net/" target="_blank" rel="noopener noreferrer" class="job-pill-link">Eleman.net</a>
+                <a href="https://www.yenibiris.com/" target="_blank" rel="noopener noreferrer" class="job-pill-link">Yenibiriş</a>
+                <a href="https://tr.indeed.com/" target="_blank" rel="noopener noreferrer" class="job-pill-link">Indeed TR</a>
+                <a href="https://tr.jooble.org/" target="_blank" rel="noopener noreferrer" class="job-pill-link">Jooble</a>
+                <a href="https://www.linkedin.com/jobs/" target="_blank" rel="noopener noreferrer" class="job-pill-link">LinkedIn İş İlanları</a>
+                <a href="https://esube.iskur.gov.tr/Istihdam/AcikIsIlanAra.aspx" target="_blank" rel="noopener noreferrer" class="job-pill-link">İŞKUR Kamu İlanları</a>
+                <a href="https://www.resmigazete.gov.tr/" target="_blank" rel="noopener noreferrer" class="job-pill-link">Resmî Gazete Çeşitli İlanlar</a>
+            </div>
+
+            <div class="rss-footer-note">
+                <span>📌 Resmî Gazete, CBİKO Kariyer Kapısı, Memurlar.Net ve İŞKUR ilanları doğrudan kurumların resmi yayın kanallarına yönlendirir. Başvuru şartları ve sınav kılavuzları için lütfen ilgili kurumun ilan detayını inceleyiniz.</span>
             </div>
         </section>
 

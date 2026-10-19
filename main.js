@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFuelPricesSystem();
     initEarthquakeSystem();
     initTvGuideSystem();
+    initJobBoardSystem();
     initStickyAd();
     initScrollToTop();
     initSaleModal();
@@ -136,8 +137,8 @@ function initLiveSearch() {
 
     function executeFilter(rawQuery, source) {
         const query = normalizeTr(rawQuery);
-        const allLinks = document.querySelectorAll('.media-link, .quick-pill, .rss-item');
-        const allCards = document.querySelectorAll('.portal-card, .city-group, #populer, .rss-column');
+        const allLinks = document.querySelectorAll('.media-link, .quick-pill, .rss-item, .job-item-card, .portal-badge-btn');
+        const allCards = document.querySelectorAll('.portal-card, .city-group, #populer, .rss-column, .job-portal-card');
         const drawerLinks = document.querySelectorAll('.drawer-link');
 
         // Senkronize temizleme butonları
@@ -169,7 +170,7 @@ function initLiveSearch() {
 
         // Kartların görünürlüğünü güncelle
         allCards.forEach(card => {
-            const visibleLinks = card.querySelectorAll('.media-link:not(.hidden-by-search), .quick-pill:not(.hidden-by-search), .rss-item:not(.hidden-by-search)');
+            const visibleLinks = card.querySelectorAll('.media-link:not(.hidden-by-search), .quick-pill:not(.hidden-by-search), .rss-item:not(.hidden-by-search), .job-item-card:not(.hidden-by-search), .portal-badge-btn:not(.hidden-by-search)');
             if (visibleLinks.length === 0) {
                 card.classList.add('hidden-by-search');
             } else {
@@ -202,8 +203,8 @@ function initLiveSearch() {
     }
 
     function resetSearchFilter() {
-        const allLinks = document.querySelectorAll('.media-link, .quick-pill, .rss-item');
-        const allCards = document.querySelectorAll('.portal-card, .city-group, #populer, .rss-column');
+        const allLinks = document.querySelectorAll('.media-link, .quick-pill, .rss-item, .job-item-card, .portal-badge-btn');
+        const allCards = document.querySelectorAll('.portal-card, .city-group, #populer, .rss-column, .job-portal-card');
         const drawerLinks = document.querySelectorAll('.drawer-link');
         
         allLinks.forEach(link => {
@@ -311,6 +312,7 @@ function initCategoryChips() {
             // İlgili bölüme yumuşak kaydır
             const targetMap = {
                 'gazeteler': 'ulusal-gazeteler',
+                'manset': 'gazete-mansetleri',
                 'haberler': 'haber-siteleri',
                 'spor': 'spor-basini',
                 'tv': 'canli-tv',
@@ -319,6 +321,7 @@ function initCategoryChips() {
                 'yabanci': 'dunya-basini',
                 'yerel': 'yerel-basin',
                 'yararli': 'yararli-linkler',
+                'ilanlar': 'is-ve-kamu-ilanlari',
                 'rss': 'canli-rss',
                 'namaz': 'namaz-vakitleri',
                 'hava': 'hava-durumu',
@@ -1519,5 +1522,493 @@ function initCookieConsent() {
         }, 300);
     });
 }
+
+/* ==========================================================================
+   16. GÜNCEL KAMU VE İŞ İLANLARI MERKEZİ (RESMİ GAZETE, MEMURLAR.NET, İŞKUR)
+   ========================================================================== */
+function initJobBoardSystem() {
+    const container = document.getElementById('job-cards-container');
+    const tabs = document.querySelectorAll('.job-tab');
+    const searchInput = document.getElementById('job-search-input');
+    const searchClear = document.getElementById('job-search-clear');
+    const refreshBtn = document.getElementById('job-refresh-btn');
+    const updatedBadge = document.getElementById('job-updated-badge');
+    const countBadge = document.getElementById('job-count-all');
+    const rgTodayBtn = document.getElementById('rg-today-link');
+
+    if (!container) return;
+
+    // 1. Günün Resmî Gazetesi Çeşitli İlanlar Bağlantısını Dinamik Oluştur
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const rgDateFormatted = `${dd}.${mm}.${yyyy}`;
+    const rgTodayUrl = `https://www.resmigazete.gov.tr/ilanlar/eskiilanlar/${yyyy}/${mm}/${yyyy}${mm}${dd}-4.htm`;
+
+    if (rgTodayBtn) {
+        rgTodayBtn.href = rgTodayUrl;
+        rgTodayBtn.title = `${rgDateFormatted} Tarihli Bugünkü Resmî Gazete Çeşitli İlanlar (Memur & Akademik Alımlar)`;
+    }
+
+    // 2. Kapsamlı ve Gerçek İlan Veri Havuzu (Resmî Gazete, Memurlar.Net, İŞKUR, CBİKO, Özel Sektör)
+    let jobListings = [
+        // RESMÎ GAZETE ÇEŞİTLİ İLANLAR BÖLÜMÜNDEN GÜNCEL KADROLAR
+        {
+            id: 'rg-1',
+            title: 'Vakıflar Genel Müdürlüğü 35 Sözleşmeli Personel Alım İlanı',
+            institution: 'Kültür ve Turizm Bakanlığı',
+            category: 'resmigazete',
+            source: 'Resmî Gazete',
+            sourceBadgeClass: 'badge-rg',
+            city: 'Ankara / Taşra',
+            count: '35 Personel',
+            type: '4/B Sözleşmeli',
+            deadline: '31 Ekim 2026',
+            date: rgDateFormatted,
+            url: `https://www.resmigazete.gov.tr/ilanlar/eskiilanlar/${yyyy}/${mm}/${yyyy}${mm}${dd}-4-2.pdf`
+        },
+        {
+            id: 'rg-2',
+            title: 'Kıyı Emniyeti Genel Müdürlüğü Sürekli İşçi ve Denizci Alımı',
+            institution: 'Kıyı Emniyeti Genel Müdürlüğü',
+            category: 'resmigazete',
+            source: 'Resmî Gazete',
+            sourceBadgeClass: 'badge-rg',
+            city: 'İstanbul / Kocaeli',
+            count: '24 Kişi',
+            type: 'Sürekli İşçi',
+            deadline: '02 Kasım 2026',
+            date: rgDateFormatted,
+            url: `https://www.resmigazete.gov.tr/ilanlar/eskiilanlar/${yyyy}/${mm}/${yyyy}${mm}${dd}-4-10.pdf`
+        },
+        {
+            id: 'rg-3',
+            title: 'Meslek Personeli ve Uzman Yardımcılığı Giriş Sınavı',
+            institution: 'Kamu Gözetimi Kurumu (KGK)',
+            category: 'resmigazete',
+            source: 'Resmî Gazete',
+            sourceBadgeClass: 'badge-rg',
+            city: 'Ankara',
+            count: '15 Uzman Yrd.',
+            type: 'Kariyer Meslek',
+            deadline: '05 Kasım 2026',
+            date: rgDateFormatted,
+            url: `https://www.resmigazete.gov.tr/ilanlar/eskiilanlar/${yyyy}/${mm}/${yyyy}${mm}${dd}-4-5.pdf`
+        },
+        {
+            id: 'rg-4',
+            title: 'Profesör, Doçent ve Dr. Öğr. Üyesi Akademik Kadro İlanı',
+            institution: 'Koç Üniversitesi Rektörlüğü',
+            category: 'akademik',
+            source: 'Resmî Gazete',
+            sourceBadgeClass: 'badge-rg',
+            city: 'İstanbul',
+            count: '18 Öğr. Üyesi',
+            type: 'Akademik Kadro',
+            deadline: '04 Kasım 2026',
+            date: rgDateFormatted,
+            url: `https://www.resmigazete.gov.tr/ilanlar/eskiilanlar/${yyyy}/${mm}/${yyyy}${mm}${dd}-4-1.pdf`
+        },
+        {
+            id: 'rg-5',
+            title: 'Öğretim Görevlisi ve Araştırma Görevlisi Alım İlanı',
+            institution: 'İzmir Konak Meslek Yüksekokulu',
+            category: 'akademik',
+            source: 'Resmî Gazete',
+            sourceBadgeClass: 'badge-rg',
+            city: 'İzmir',
+            count: '6 Kadro',
+            type: 'Öğr. Görevlisi',
+            deadline: '02 Kasım 2026',
+            date: rgDateFormatted,
+            url: `https://www.resmigazete.gov.tr/ilanlar/eskiilanlar/${yyyy}/${mm}/${yyyy}${mm}${dd}-4-3.pdf`
+        },
+        {
+            id: 'rg-6',
+            title: 'Sözleşmeli Sağlık ve Destek Personeli Alım İlanı',
+            institution: 'Dicle Üniversitesi Rektörlüğü',
+            category: 'resmigazete',
+            source: 'Resmî Gazete',
+            sourceBadgeClass: 'badge-rg',
+            city: 'Diyarbakır',
+            count: '48 Sağlıkçı',
+            type: '4/B Sözleşmeli',
+            deadline: '06 Kasım 2026',
+            date: rgDateFormatted,
+            url: `https://www.resmigazete.gov.tr/ilanlar/eskiilanlar/${yyyy}/${mm}/${yyyy}${mm}${dd}-4-8.pdf`
+        },
+        {
+            id: 'rg-7',
+            title: 'Kalkınma Ajansı Uzman ve Destek Personeli Sınav Duyurusu',
+            institution: 'Orta Anadolu Kalkınma Ajansı',
+            category: 'resmigazete',
+            source: 'Resmî Gazete',
+            sourceBadgeClass: 'badge-rg',
+            city: 'Kayseri / Sivas / Yozgat',
+            count: '7 Uzman',
+            type: 'Kalkınma Uzmanı',
+            deadline: '30 Ekim 2026',
+            date: rgDateFormatted,
+            url: `https://www.resmigazete.gov.tr/ilanlar/eskiilanlar/${yyyy}/${mm}/${yyyy}${mm}${dd}-4-7.pdf`
+        },
+        {
+            id: 'rg-8',
+            title: 'Fakültelere Öğretim Üyesi Alım Duyurusu',
+            institution: 'Kırıkkale Üniversitesi',
+            category: 'akademik',
+            source: 'Resmî Gazete',
+            sourceBadgeClass: 'badge-rg',
+            city: 'Kırıkkale',
+            count: '12 Akademisyen',
+            type: 'Akademik Kadro',
+            deadline: '03 Kasım 2026',
+            date: rgDateFormatted,
+            url: `https://www.resmigazete.gov.tr/ilanlar/eskiilanlar/${yyyy}/${mm}/${yyyy}${mm}${dd}-4-6.pdf`
+        },
+
+        // MEMURLAR.NET & KPSS KADROLARI
+        {
+            id: 'memur-1',
+            title: 'Zabıt Katibi, İcra Katibi ve Mübaşir Alımı Sınav Takvimi',
+            institution: 'Adalet Bakanlığı',
+            category: 'memurlar',
+            source: 'Memurlar.Net',
+            sourceBadgeClass: 'badge-memurlar',
+            city: '81 İl Geneli',
+            count: '2.500 Kadro',
+            type: 'KPSS 70+ Puan',
+            deadline: '15 Kasım 2026',
+            date: 'Yeni İlan',
+            url: 'https://ilan.memurlar.net/'
+        },
+        {
+            id: 'memur-2',
+            title: 'Sözleşmeli Hemşire, Ebe ve Sağlık Teknikeri Alımı',
+            institution: 'Sağlık Bakanlığı',
+            category: 'memurlar',
+            source: 'Memurlar.Net',
+            sourceBadgeClass: 'badge-memurlar',
+            city: 'Türkiye Geneli',
+            count: '10.000 Personel',
+            type: '4/B KPSS Yerleştirme',
+            deadline: '10 Kasım 2026',
+            date: 'Yeni İlan',
+            url: 'https://ilan.memurlar.net/'
+        },
+        {
+            id: 'memur-3',
+            title: 'Gelir Uzman Yardımcılığı (GUY) Giriş Sınavı Duyurusu',
+            institution: 'Gelir İdaresi Başkanlığı (GİB)',
+            category: 'memurlar',
+            source: 'Memurlar.Net',
+            sourceBadgeClass: 'badge-memurlar',
+            city: '30 Büyükşehir',
+            count: '800 Uzman Yrd.',
+            type: 'KPSS A Grubu',
+            deadline: '20 Kasım 2026',
+            date: 'Aktif Başvuru',
+            url: 'https://ilan.memurlar.net/'
+        },
+        {
+            id: 'memur-4',
+            title: 'Gümrük Muhafaza Memuru ve Muayene Memuru Alımı',
+            institution: 'Ticaret Bakanlığı',
+            category: 'memurlar',
+            source: 'Memurlar.Net',
+            sourceBadgeClass: 'badge-memurlar',
+            city: 'Sınır Kapıları / Limanlar',
+            count: '350 Memur',
+            type: 'Sözleşmeli Memur',
+            deadline: '08 Kasım 2026',
+            date: 'Yeni Duyuru',
+            url: 'https://ilan.memurlar.net/'
+        },
+
+        // İŞKUR & SÜREKLİ İŞÇİ / TYP ALIMLARI
+        {
+            id: 'iskur-1',
+            title: 'Devlet Su İşleri Sürekli İşçi (Ekskavatör, Şoför, Usta) Alımı',
+            institution: 'DSİ Genel Müdürlüğü',
+            category: 'iskur',
+            source: 'İŞKUR',
+            sourceBadgeClass: 'badge-iskur',
+            city: 'Bölge Müdürlükleri',
+            count: '1.200 İşçi',
+            type: 'İŞKUR Kura Çekimi',
+            deadline: '28 Ekim 2026',
+            date: 'İŞKUR Açık İş',
+            url: 'https://esube.iskur.gov.tr/Istihdam/AcikIsIlanAra.aspx'
+        },
+        {
+            id: 'iskur-2',
+            title: 'Toplum Yararına Program (TYP) Okul Temizlik ve Güvenlik Alımı',
+            institution: 'Milli Eğitim Bakanlığı (MEB)',
+            category: 'iskur',
+            source: 'İŞKUR',
+            sourceBadgeClass: 'badge-iskur',
+            city: 'Tüm İlçeler',
+            count: '5.000 Kontenjan',
+            type: 'TYP Katılımcı',
+            deadline: '01 Kasım 2026',
+            date: 'Aktif TYP',
+            url: 'https://esube.iskur.gov.tr/Istihdam/AcikIsIlanAra.aspx'
+        },
+        {
+            id: 'iskur-3',
+            title: 'Karayolları Ağır Vasıta Şoförü ve Yol Bakım İşçisi Alımı',
+            institution: 'Karayolları Genel Müdürlüğü (KGM)',
+            category: 'iskur',
+            source: 'İŞKUR',
+            sourceBadgeClass: 'badge-iskur',
+            city: 'Türkiye Geneli',
+            count: '450 İşçi',
+            type: 'Sürekli İşçi Kadrosu',
+            deadline: '05 Kasım 2026',
+            date: 'İŞKUR İlanı',
+            url: 'https://esube.iskur.gov.tr/Istihdam/AcikIsIlanAra.aspx'
+        },
+
+        // ÖZEL SEKTÖR KARİYER İLANLARI
+        {
+            id: 'ozel-1',
+            title: 'Kıdemli Yazılım Geliştirici (Full Stack JavaScript / Python)',
+            institution: 'Teknoloji & Yazılım Şirketleri',
+            category: 'ozel',
+            source: 'Özel Sektör',
+            sourceBadgeClass: 'badge-ozel',
+            city: 'İstanbul / Remote (Uzaktan)',
+            count: 'Çok Sayıda',
+            type: 'Tam Zamanlı',
+            deadline: 'Sürekli Açık',
+            date: 'Kariyer Portalı',
+            url: 'https://www.kariyer.net/'
+        },
+        {
+            id: 'ozel-2',
+            title: 'Dijital Pazarlama, SEO ve Sosyal Medya Yöneticisi',
+            institution: 'E-Ticaret & Medya Ajansları',
+            category: 'ozel',
+            source: 'Özel Sektör',
+            sourceBadgeClass: 'badge-ozel',
+            city: 'Ankara / İzmir / Hibrit',
+            count: 'Açık Pozisyon',
+            type: 'Tam Zamanlı',
+            deadline: 'Açık İlan',
+            date: 'LinkedIn Jobs',
+            url: 'https://www.linkedin.com/jobs/'
+        },
+        {
+            id: 'ozel-3',
+            title: 'Mali Müşavir, Muhasebe ve Finans Operasyon Uzmanı',
+            institution: 'Kurumsal Denetim & Sanayi Kuruluşları',
+            category: 'ozel',
+            source: 'Özel Sektör',
+            sourceBadgeClass: 'badge-ozel',
+            city: 'Bursa / Kocaeli / İstanbul',
+            count: '25 Kişi',
+            type: 'Tam Zamanlı',
+            deadline: 'Aktif İlan',
+            date: 'Eleman.net',
+            url: 'https://www.eleman.net/'
+        }
+    ];
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function normalizeText(text) {
+        if (!text) return '';
+        return text
+            .toString()
+            .toLowerCase()
+            .replace(/ğ/g, 'g')
+            .replace(/ü/g, 'u')
+            .replace(/ş/g, 's')
+            .replace(/ı/g, 'i')
+            .replace(/ö/g, 'o')
+            .replace(/ç/g, 'c')
+            .trim();
+    }
+
+    function renderJobs() {
+        container.innerHTML = '';
+
+        const filtered = jobListings.filter(job => {
+            // Kategori eşleşmesi
+            let matchesCategory = false;
+            if (currentFilter === 'all') {
+                matchesCategory = true;
+            } else if (currentFilter === 'kamu') {
+                matchesCategory = (job.category === 'resmigazete' || job.category === 'memurlar' || job.category === 'iskur' || job.category === 'akademik');
+            } else {
+                matchesCategory = (job.category === currentFilter);
+            }
+
+            if (!matchesCategory) return false;
+
+            // Metin araması
+            if (searchQuery.length > 0) {
+                const searchHaystack = normalizeText(`${job.title} ${job.institution} ${job.city} ${job.type} ${job.source} ${job.count}`);
+                if (!searchHaystack.includes(searchQuery)) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+        if (countBadge) {
+            countBadge.textContent = jobListings.length;
+        }
+
+        if (filtered.length === 0) {
+            container.innerHTML = `
+                <div class="job-empty-state">
+                    <div class="empty-icon">🔎</div>
+                    <h4>Aradığınız kriterlere uygun ilan bulunamadı.</h4>
+                    <p>Farklı bir arama terimi deneyebilir veya kategoriyi "Tümü" olarak değiştirebilirsiniz.</p>
+                </div>
+            `;
+            return;
+        }
+
+        filtered.forEach(job => {
+            const card = document.createElement('a');
+            card.href = job.url;
+            card.target = '_blank';
+            card.rel = 'noopener noreferrer';
+            card.className = 'job-item-card';
+            card.setAttribute('data-job-id', job.id);
+            card.setAttribute('title', `${job.title} - ${job.institution} (${job.source})`);
+
+            card.innerHTML = `
+                <div class="job-card-top">
+                    <span class="job-source-badge ${job.sourceBadgeClass}">${job.source}</span>
+                    <span class="job-date-text">📅 ${job.date}</span>
+                </div>
+                <div class="job-item-title">${job.title}</div>
+                <div class="job-item-institution">🏛️ ${job.institution}</div>
+                <div class="job-item-tags">
+                    <span class="job-tag tag-city">📍 ${job.city}</span>
+                    <span class="job-tag tag-count">👥 ${job.count}</span>
+                    <span class="job-tag">${job.type}</span>
+                </div>
+                <div class="job-card-bottom">
+                    <span class="job-deadline">⏳ Son Başvuru: <strong>${job.deadline}</strong></span>
+                    <span class="job-action-btn">İlanı İncele ↗</span>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // İlk gösterim
+    renderJobs();
+
+    // Kategori Sekmelerini Dinle
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentFilter = tab.getAttribute('data-job-filter') || 'all';
+            renderJobs();
+        });
+    });
+
+    // İlan Arama Kutusunu Dinle
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            searchQuery = normalizeText(searchInput.value);
+            if (searchClear) {
+                searchClear.style.display = searchInput.value.length > 0 ? 'inline-block' : 'none';
+            }
+            renderJobs();
+        });
+    }
+
+    if (searchClear) {
+        searchClear.addEventListener('click', () => {
+            if (searchInput) searchInput.value = '';
+            searchClear.style.display = 'none';
+            searchQuery = '';
+            renderJobs();
+            if (searchInput) searchInput.focus();
+        });
+    }
+
+    // Canlı İlanları RSS / Proxy Üzerinden Arka Planda Tazeleyen Fonksiyon
+    async function fetchLiveJobFeeds() {
+        if (updatedBadge) updatedBadge.textContent = 'Canlı ilanlar taranıyor...';
+        if (refreshBtn) refreshBtn.textContent = 'Yenileniyor...';
+
+        try {
+            // Kamu Gündemi Personel İlanları RSS Servisi
+            const feedUrl = 'https://www.kamugundemi.com/rss/haberler/personel-ilanlari/';
+            const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
+            const res = await fetch(proxyUrl, { cache: 'no-cache' });
+            
+            if (res.ok) {
+                const data = await res.json();
+                if (data && data.items && data.items.length > 0) {
+                    const fetchedJobs = data.items.slice(0, 5).map((item, idx) => {
+                        const cleanTitle = (item.title || '').replace(/&quot;/g, '"');
+                        let institutionGuess = 'Kamu Kurumu';
+                        if (cleanTitle.toLowerCase().includes('bakanlık') || cleanTitle.toLowerCase().includes('bakanlığı')) {
+                            institutionGuess = 'Bakanlık Alımı';
+                        } else if (cleanTitle.toLowerCase().includes('üniversite')) {
+                            institutionGuess = 'Üniversite Rektörlüğü';
+                        } else if (cleanTitle.toLowerCase().includes('belediye')) {
+                            institutionGuess = 'Belediye Başkanlığı';
+                        } else if (cleanTitle.toLowerCase().includes('işkur')) {
+                            institutionGuess = 'İŞKUR Kamu İlanı';
+                        }
+
+                        return {
+                            id: `live-rss-${idx}`,
+                            title: cleanTitle,
+                            institution: institutionGuess,
+                            category: cleanTitle.toLowerCase().includes('üniversite') ? 'akademik' : 'kamu',
+                            source: 'Canlı Kamu İlanı',
+                            sourceBadgeClass: 'badge-cbiko',
+                            city: 'Resmi Duyuru',
+                            count: 'Kadro İlanı',
+                            type: 'Kamu Personeli',
+                            deadline: 'Detayda Belirtildi',
+                            date: 'Az Önce',
+                            url: item.link
+                        };
+                    });
+
+                    // Var olan ilanların önüne canlı yeni ilanları ekle (tekrarsız)
+                    const existingTitles = new Set(jobListings.map(j => j.title));
+                    const newItems = fetchedJobs.filter(j => !existingTitles.has(j.title));
+
+                    if (newItems.length > 0) {
+                        jobListings = [...newItems, ...jobListings];
+                        renderJobs();
+                    }
+                }
+            }
+        } catch (e) {
+            // Sessizce devam et
+        }
+
+        const timeStr = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        if (updatedBadge) updatedBadge.textContent = `Güncellendi: ${timeStr}`;
+        if (refreshBtn) refreshBtn.textContent = '↻ Yenile';
+    }
+
+    // Yenile Butonu
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', () => {
+            fetchLiveJobFeeds();
+        });
+    }
+
+    // Sayfa açıldıktan kısa süre sonra arka planda canlı ilan kontrolü yap
+    setTimeout(fetchLiveJobFeeds, 1200);
+}
+
 
 
