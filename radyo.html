@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="tr" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Çevrim İçi Radyolar & Canlı Radyo Dinle | Kehribar Dergisi</title>
+    
+    <meta name="description" content="Türkiye'nin en popüler canlı radyo kanalları, kesintisiz online radyo dinleme çaları, Kral FM, Power Türk, Süper FM, TRT FM ve haber radyoları tek ekranda.">
+    <meta name="keywords" content="canlı radyo dinle, online radyo, kral fm dinle, power fm dinle, trt fm canlı, slow türk dinle, süper fm, best fm, ntv radyo, radyo frekansları, kehribar medya">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://kehribardergisi.com/radyo.html">
+
+    <!-- Mobil & PWA Ayarları -->
+    <meta name="theme-color" content="#047857">
+    <link rel="icon" type="image/png" href="link.png">
+    <link rel="shortcut icon" type="image/png" href="link.png">
+    <link rel="apple-touch-icon" href="link.png">
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Çevrim İçi Radyolar & Canlı Radyo Dinle | Kehribar Dergisi">
+    <meta property="og:description" content="Türkiye'nin en popüler canlı radyo kanalları, kesintisiz online radyo dinleme çaları, Kral FM, Power Türk, Süper FM ve TRT FM tek ekranda.">
+    <meta property="og:url" content="https://kehribardergisi.com/radyo.html">
+    <meta property="og:image" content="https://kehribardergisi.com/link.png">
+    <meta property="og:site_name" content="Kehribar Dergisi">
+
+    <!-- Twitter Cards (X) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Çevrim İçi Radyolar & Canlı Radyo Dinle | Kehribar Dergisi">
+    <meta name="twitter:description" content="En sevilen radyo istasyonlarını canlı web çalarıyla kesintisiz dinleyin.">
+    <meta name="twitter:image" content="https://kehribardergisi.com/link.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Schema.org Yapılandırılmış Veri (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://kehribardergisi.com/radyo.html#webpage",
+          "url": "https://kehribardergisi.com/radyo.html",
+          "name": "Çevrim İçi Radyolar & Canlı Radyo Dinle | Kehribar Dergisi",
+          "description": "Türkiye'nin en popüler canlı radyo kanalları, kesintisiz online radyo dinleme çaları.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://kehribardergisi.com/#website",
+            "url": "https://kehribardergisi.com/",
+            "name": "Kehribar Dergisi"
+          },
+          "inLanguage": "tr"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://kehribardergisi.com/radyo.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Ana Sayfa",
+              "item": "https://kehribardergisi.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Çevrim İçi Radyolar",
+              "item": "https://kehribardergisi.com/radyo.html"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- HLS.js Kütüphanesi (Canlı .m3u8 Akışları İçin) -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.8/dist/hls.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css?v=4.2">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2401373246538934" crossorigin="anonymous"></script>
+
+    <style>
+        .radio-card {
+            text-decoration: none !important;
+            color: inherit !important;
+        }
+        .radio-card.active {
+            border-color: #10b981 !important;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(5, 150, 105, 0.18)) !important;
+            box-shadow: 0 0 0 1.5px #10b981, 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+        }
+        .radio-card.active .radio-card-btn {
+            background-color: #10b981 !important;
+            border-color: #10b981 !important;
+            color: #ffffff !important;
+        }
+        .radio-card-btn {
+            z-index: 2;
+            cursor: pointer;
+        }
+        .radio-card:hover .radio-card-ext-icon {
+            color: var(--brand-amber) !important;
+        }
+        .radio-eq-anim.paused .radio-eq-bar {
+            animation-play-state: paused !important;
+            height: 3px !important;
+        }
+        .radio-loading-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #10b981;
+            margin-right: 6px;
+            animation: livePulse 1.2s infinite;
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <!-- ORTAK HEADER BİLEŞENİ -->
+    <div id="site-header" data-active="radyo"></div>
+
+    <!-- ÜST REKLAM LEADERBOARD (728x90) -->
+    <div id="ad-top-leaderboard-container" class="container ad-wrapper ad-top-leaderboard">
+        <div class="ad-card">
+            <div class="ad-tag">REKLAM / ADSENSE (728x90)</div>
+            <div class="ad-content ad-728x90">
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:728px;height:90px"
+                     data-ad-client="ca-pub-2401373246538934"
+                     data-ad-slot="7887510058"></ins>
+                <div class="ad-placeholder-text">
+                    <strong>Google AdSense Leaderboard Alanı</strong>
+                    <span>(Radyo Portalı Üst Reklam Alanı)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ANA İÇERİK -->
+    <main class="main-content container">
+
+        <!-- SAYFA BAŞLIK & İSTATİSTİK VİTRİNİ -->
+        <div class="page-intro-banner">
+            <div class="page-intro-info">
+                <span class="page-intro-badge">📻 KESİNTİSİZ GERÇEK CANLI YAYINLAR</span>
+                <h2 class="page-intro-title">Çevrim İçi Radyolar & Canlı Çalar</h2>
+                <p class="page-intro-desc">
+                    Türkiye'nin en popüler ulusal radyoları, 7/24 canlı haber, slow, pop, Türk sanat ve halk müziği istasyonlarını doğrudan dinleyin. İstasyonun üzerine tıklayarak resmi web sitesine gidebilir, oynat butonuna basarak kesintisiz canlı yayını başlatabilirsiniz.
+                </p>
+            </div>
+            <div class="page-intro-stats">
+                <div class="intro-stat-card">
+                    <span class="intro-stat-num">32+</span>
+                    <span class="intro-stat-label">Canlı İstasyon</span>
+                </div>
+                <div class="intro-stat-card">
+                    <span class="intro-stat-num">HD</span>
+                    <span class="intro-stat-label">Ses Kalitesi</span>
+                </div>
+                <div class="intro-stat-card">
+                    <span class="intro-stat-num">FM</span>
+                    <span class="intro-stat-label">Frekans Listesi</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- İNTERAKTİF RADYO OYNATICI ÇUBUĞU (REAL LIVE WEB AUDIO PLAYER) -->
+        <section class="radio-featured-player" aria-label="Canlı Radyo Çaları">
+            <div class="radio-player-inner">
+                <div class="radio-player-station-info">
+                    <div class="radio-player-avatar" id="player-avatar">👑</div>
+                    <div>
+                        <h3 class="radio-station-title" id="player-station-title">Kral Pop (Canlı Yayın)</h3>
+                        <div class="radio-station-status">
+                            <span class="radio-eq-anim paused" id="player-eq">
+                                <span class="radio-eq-bar"></span>
+                                <span class="radio-eq-bar"></span>
+                                <span class="radio-eq-bar"></span>
+                                <span class="radio-eq-bar"></span>
+                            </span>
+                            <span id="player-status-text">Yayın hazır · Dinlemek için Oynat'a basın</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="radio-player-controls">
+                    <button type="button" id="radio-master-play-btn" class="radio-big-play-btn" title="Oynat / Duraklat" aria-label="Oynat / Duraklat">
+                        ▶
+                    </button>
+                    <div class="radio-volume-wrap">
+                        <span id="volume-icon" style="cursor:pointer;" title="Sesi Kapat / Aç">🔊</span>
+                        <input type="range" id="radio-volume-control" class="radio-volume-slider" min="0" max="1" step="0.05" value="0.8" title="Ses Seviyesi">
+                    </div>
+                </div>
+            </div>
+
+            <!-- HTML5 Ses Elemanı -->
+            <audio id="portal-audio-player" preload="none"></audio>
+        </section>
+
+        <!-- KATEGORİ CHIPS -->
+        <nav class="category-nav-bar">
+            <div class="container category-chips">
+                <button class="chip active" data-filter="all">Tüm Radyolar</button>
+                <button class="chip" data-filter="pop">🎵 Pop & Hit Müzik</button>
+                <button class="chip" data-filter="haber">🎙️ Haber & Spor</button>
+                <button class="chip" data-filter="slow">🌙 Slow & Arabesk</button>
+                <button class="chip" data-filter="turk">🎻 Türk Sanat & Türkü</button>
+                <button class="chip" data-filter="yabanci">🎸 Yabancı & Rock</button>
+                <button class="chip" data-filter="tematik">📻 Dini & Tematik</button>
+                <button class="chip" data-filter="frekans">📍 FM Frekans Tablosu</button>
+            </div>
+        </nav>
+
+        <!-- BÖLÜM: Popüler Türkçe Pop & Hit Radyolar -->
+        <section id="pop-radyolar" class="portal-card mt-section" data-category="pop">
+            <div class="card-head">
+                <span class="card-icon">🎵</span>
+                <div>
+                    <h3>Popüler Türkçe Pop & Hit Radyolar</h3>
+                    <span class="card-subtext">Günün en sevilen pop hitleri ve yüksek enerjili yayınlar (Karta tıkla siteye git, ▶ bas dinle)</span>
+                </div>
+                <span class="badge-count">9</span>
+            </div>
+            <div class="radio-grid">
+                <a href="https://www.kralmuzik.com.tr/" target="_blank" rel="noopener noreferrer" class="radio-card media-link active" data-slug="kral-pop" title="Kral Pop Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">👑</div>
+                        <div>
+                            <div class="radio-card-title">Kral Pop <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Türkçe Pop Hit</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Kral Pop', 'https://dygedge2.radyotvonline.net/kralpop/playlist.m3u8', '👑', 'Türkçe Pop Hit', this)">⏸</button>
+                </a>
+                <a href="https://www.powerapp.com.tr/powerturk/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="power-turk" title="Power Türk Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">⚡</div>
+                        <div>
+                            <div class="radio-card-title">Power Türk <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Önce Müzik</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Power Türk', 'https://listen.powerapp.com.tr/powerturk/128/chunks.m3u8', '⚡', 'Önce Müzik', this)">▶</button>
+                </a>
+                <a href="https://karnaval.com/radyolar/superfm" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="super-fm" title="Süper FM Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">⭐</div>
+                        <div>
+                            <div class="radio-card-title">Süper FM <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">En Süper Hit Müzikler</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Süper FM', 'https://27943.live.streamtheworld.com/SUPER_FMAAC_SC', '⭐', 'En Süper Hit Müzikler', this)">▶</button>
+                </a>
+                <a href="https://www.powerapp.com.tr/powerpop/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="power-pop" title="Power POP Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🔥</div>
+                        <div>
+                            <div class="radio-card-title">Power POP <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Popüler Müzik</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Power POP', 'https://listen.powerapp.com.tr/powerpop/128/chunks.m3u8', '🔥', 'Popüler Müzik', this)">▶</button>
+                </a>
+                <a href="https://www.radyofenomen.com/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="fenomen-turk" title="Fenomen Türk Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🚀</div>
+                        <div>
+                            <div class="radio-card-title">Fenomen Türk <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Türkçe Hit Müzik</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Fenomen Türk', 'https://live.radyofenomen.com/fenomenturk/128/icecast.audio', '🚀', 'Türkçe Hit Müzik', this)">▶</button>
+                </a>
+                <a href="https://www.showradyo.com.tr/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="show-radyo" title="Show Radyo Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🟣</div>
+                        <div>
+                            <div class="radio-card-title">Show Radyo <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Türkçe Müziğin Şovu</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Show Radyo', 'https://showradyo.radyotvonline.net/showradyo', '🟣', 'Türkçe Müziğin Şovu', this)">▶</button>
+                </a>
+                <a href="https://www.radyod.com/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="radyo-d" title="Radyo D Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🔵</div>
+                        <div>
+                            <div class="radio-card-title">Radyo D <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Daha Fazla Müzik</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Radyo D', 'https://radyo.duhnet.tv/radyod', '🔵', 'Daha Fazla Müzik', this)">▶</button>
+                </a>
+                <a href="https://karnaval.com/radyolar/metrofm" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="metro-fm" title="Metro FM Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🎵</div>
+                        <div>
+                            <div class="radio-card-title">Metro FM <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Hit Müzik İstasyonu</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Metro FM', 'https://25703.live.streamtheworld.com/METRO_FMAAC_SC', '🎵', 'Hit Müzik İstasyonu', this)">▶</button>
+                </a>
+                <a href="https://karnaval.com/radyolar/virginradioturkiye" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="virgin-radio" title="Virgin Radio TR Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🎧</div>
+                        <div>
+                            <div class="radio-card-title">Virgin Radio TR <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Hit Müzik İstasyonu</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Virgin Radio TR', 'https://29073.live.streamtheworld.com/VIRGIN_RADIO_SC', '🎧', 'Hit Müzik İstasyonu', this)">▶</button>
+                </a>
+            </div>
+        </section>
+
+        <!-- BÖLÜM: 7/24 Canlı Haber & Spor Radyoları -->
+        <section id="haber-radyolar" class="portal-card mt-section" data-category="haber">
+            <div class="card-head">
+                <span class="card-icon">🎙️</span>
+                <div>
+                    <h3>7/24 Canlı Haber & Spor Radyoları</h3>
+                    <span class="card-subtext">Son dakika haberleri, gündem, ekonomi ve canlı maç heyecanı</span>
+                </div>
+                <span class="badge-count">6</span>
+            </div>
+            <div class="radio-grid">
+                <a href="https://www.trtdinle.com/channel/trt-fm" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="trt-fm" title="TRT FM Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">📻</div>
+                        <div>
+                            <div class="radio-card-title">TRT FM <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Türkiye'nin Radyosu</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'TRT FM', 'https://radio-trtfm.live.trt.com.tr/master.m3u8', '📻', 'Türkiye'nin Radyosu', this)">▶</button>
+                </a>
+                <a href="https://www.trthaber.com/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="trt-haber-radyo" title="TRT Radyo Haber Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">⚡</div>
+                        <div>
+                            <div class="radio-card-title">TRT Radyo Haber <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">7/24 Kesintisiz Haber</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'TRT Radyo Haber', 'https://radio-trtradyohaber.live.trt.com.tr/master.m3u8', '⚡', '7/24 Kesintisiz Haber', this)">▶</button>
+                </a>
+                <a href="https://www.ntvradyo.com.tr/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="ntv-radyo" title="NTV Radyo Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🔵</div>
+                        <div>
+                            <div class="radio-card-title">NTV Radyo <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Haberin Sesi</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'NTV Radyo', 'https://dygedge2.radyotvonline.net/ntvradyo/playlist.m3u8', '🔵', 'Haberin Sesi', this)">▶</button>
+                </a>
+                <a href="https://www.ahaber.com.tr/canli-radyo-dinle" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="ahaber-radyo" title="A Haber Radyo Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🔴</div>
+                        <div>
+                            <div class="radio-card-title">A Haber Radyo <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Sıcak Gündem ve Haber</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'A Haber Radyo', 'https://trkvz-radyolar.ercdn.net/ahaberradyo/playlist.m3u8', '🔴', 'Sıcak Gündem ve Haber', this)">▶</button>
+                </a>
+                <a href="https://www.aspor.com.tr/canli-radyo-dinle" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="aspor-radyo" title="A Spor Radyo Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">⚽</div>
+                        <div>
+                            <div class="radio-card-title">A Spor Radyo <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Canlı Maç & Spor Yorumları</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'A Spor Radyo', 'https://trkvz-radyolar.ercdn.net/asporradyo/playlist.m3u8', '⚽', 'Canlı Maç & Spor Yorumları', this)">▶</button>
+                </a>
+                <a href="https://www.trtdinle.com/channel/trt-radyo-1" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="trt-radyo-1" title="TRT Radyo 1 Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🎙️</div>
+                        <div>
+                            <div class="radio-card-title">TRT Radyo 1 <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Kültür, Sanat ve Bilim</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'TRT Radyo 1', 'https://radio-trtradyo1.live.trt.com.tr/master.m3u8', '🎙️', 'Kültür, Sanat ve Bilim', this)">▶</button>
+                </a>
+            </div>
+        </section>
+
+        <!-- BÖLÜM: Slow, Romantik & Damar Arabesk Şarkılar -->
+        <section id="slow-radyolar" class="portal-card mt-section" data-category="slow">
+            <div class="card-head">
+                <span class="card-icon">🌙</span>
+                <div>
+                    <h3>Slow, Romantik & Damar Arabesk Şarkılar</h3>
+                    <span class="card-subtext">Huzur veren melodiler, aşk şarkıları ve klasik arabesk ezgiler</span>
+                </div>
+                <span class="badge-count">6</span>
+            </div>
+            <div class="radio-grid">
+                <a href="https://www.slowturk.com.tr/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="slow-turk" title="Slow Türk Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🌹</div>
+                        <div>
+                            <div class="radio-card-title">Slow Türk <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Aşkın Frekansı</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Slow Türk', 'https://radyo.duhnet.tv/slowturk', '🌹', 'Aşkın Frekansı', this)">▶</button>
+                </a>
+                <a href="https://www.kralmuzik.com.tr/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="kral-fm" title="Kral FM Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">💊</div>
+                        <div>
+                            <div class="radio-card-title">Kral FM <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">İlaç Gibi Radyo</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Kral FM', 'https://dygedge2.radyotvonline.net/kralfm/playlist.m3u8', '💊', 'İlaç Gibi Radyo', this)">▶</button>
+                </a>
+                <a href="https://www.powerapp.com.tr/powerlove/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="power-love" title="Power Love Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">💖</div>
+                        <div>
+                            <div class="radio-card-title">Power Love <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">En Sevilen Slow Şarkılar</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Power Love', 'https://listen.powerapp.com.tr/powerlove/128/chunks.m3u8', '💖', 'En Sevilen Slow Şarkılar', this)">▶</button>
+                </a>
+                <a href="https://karnaval.com/radyolar/joyfm" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="joy-fm" title="Joy FM Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🕯️</div>
+                        <div>
+                            <div class="radio-card-title">Joy FM <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Easy Listening & Romantik</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Joy FM', 'https://27943.live.streamtheworld.com/JOY_FMAAC_SC', '🕯️', 'Easy Listening & Romantik', this)">▶</button>
+                </a>
+                <a href="https://canli.arabeskinmerkezi.com/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="arabesk-turkiye" title="Arabesk Türkiye Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">📻</div>
+                        <div>
+                            <div class="radio-card-title">Arabesk Türkiye <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Arabeskin Merkezi</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Arabesk Türkiye', 'https://canli.arabeskinmerkezi.com:9180/stream', '📻', 'Arabeskin Merkezi', this)">▶</button>
+                </a>
+                <a href="https://kralturk.net/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="kral-turk" title="Kral Türk FM Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">👑</div>
+                        <div>
+                            <div class="radio-card-title">Kral Türk FM <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Damar & Halk Müziği</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Kral Türk FM', 'https://live.radyositesihazir.com/8032/stream', '👑', 'Damar & Halk Müziği', this)">▶</button>
+                </a>
+            </div>
+        </section>
+
+        <!-- BÖLÜM: Türk Sanat & Türk Halk Müziği -->
+        <section id="turk-radyolar" class="portal-card mt-section" data-category="turk">
+            <div class="card-head">
+                <span class="card-icon">🎻</span>
+                <div>
+                    <h3>Türk Sanat & Türk Halk Müziği</h3>
+                    <span class="card-subtext">Geleneksel ezgiler, türküler ve klasik alaturka eserler</span>
+                </div>
+                <span class="badge-count">3</span>
+            </div>
+            <div class="radio-grid">
+                <a href="https://www.trtdinle.com/channel/trt-turku" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="trt-turku" title="TRT Türkü Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🌾</div>
+                        <div>
+                            <div class="radio-card-title">TRT Türkü <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Bozkırın ve Anadolu'nun Sesi</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'TRT Türkü', 'https://rd-trtturku.medya.trt.com.tr/master_128.m3u8', '🌾', 'Bozkırın ve Anadolu'nun Sesi', this)">▶</button>
+                </a>
+                <a href="https://www.trtdinle.com/channel/trt-nagme" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="trt-nagme" title="TRT Nağme Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🎻</div>
+                        <div>
+                            <div class="radio-card-title">TRT Nağme <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Klasik Türk Sanat Müziği</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'TRT Nağme', 'https://rd-trtnagme.medya.trt.com.tr/master_128.m3u8', '🎻', 'Klasik Türk Sanat Müziği', this)">▶</button>
+                </a>
+                <a href="https://www.radyoalaturka.com.tr/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="radyo-alaturka" title="Radyo Alaturka Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🪕</div>
+                        <div>
+                            <div class="radio-card-title">Radyo Alaturka <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Gönülden Gönüle Nağmeler</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Radyo Alaturka', 'https://yayin.jumboserver.net:9100/stream', '🪕', 'Gönülden Gönüle Nağmeler', this)">▶</button>
+                </a>
+            </div>
+        </section>
+
+        <!-- BÖLÜM: Yabancı Pop, Rock, Caz & Dünya Müziği -->
+        <section id="yabanci-radyolar" class="portal-card mt-section" data-category="yabanci">
+            <div class="card-head">
+                <span class="card-icon">🎸</span>
+                <div>
+                    <h3>Yabancı Pop, Rock, Caz & Dünya Müziği</h3>
+                    <span class="card-subtext">Dünya listelerinin bir numaraları, enerjik rock ve elektronik ezgiler</span>
+                </div>
+                <span class="badge-count">5</span>
+            </div>
+            <div class="radio-grid">
+                <a href="https://www.powerapp.com.tr/powerfm/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="power-fm" title="Power FM Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🔥</div>
+                        <div>
+                            <div class="radio-card-title">Power FM <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Can't Stop The Music</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Power FM', 'https://listen.powerapp.com.tr/powerfm/128/chunks.m3u8', '🔥', 'Can't Stop The Music', this)">▶</button>
+                </a>
+                <a href="https://karnaval.com/radyolar/virginradioturkiye" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="virgin-radio-yabanci" title="Virgin Radio TR Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🎧</div>
+                        <div>
+                            <div class="radio-card-title">Virgin Radio TR <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Yabancı Hit İstasyonu</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Virgin Radio TR', 'https://29073.live.streamtheworld.com/VIRGIN_RADIO_SC', '🎧', 'Yabancı Hit İstasyonu', this)">▶</button>
+                </a>
+                <a href="https://www.radyofenomen.com/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="radyo-fenomen" title="Radyo Fenomen Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🚀</div>
+                        <div>
+                            <div class="radio-card-title">Radyo Fenomen <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Maksimum Hit Müzik</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Radyo Fenomen', 'https://live.radyofenomen.com/fenomen/128/icecast.audio', '🚀', 'Maksimum Hit Müzik', this)">▶</button>
+                </a>
+                <a href="https://karnaval.com/radyolar/metrofm" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="metro-fm-yabanci" title="Metro FM Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🎵</div>
+                        <div>
+                            <div class="radio-card-title">Metro FM <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Yabancı Müziğin Adresi</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Metro FM', 'https://25703.live.streamtheworld.com/METRO_FMAAC_SC', '🎵', 'Yabancı Müziğin Adresi', this)">▶</button>
+                </a>
+                <a href="https://karnaval.com/radyolar/joyturkrock" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="joy-turk-rock" title="Joy Türk Rock Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🎸</div>
+                        <div>
+                            <div class="radio-card-title">Joy Türk Rock <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Saf Türkçe Rock</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Joy Türk Rock', 'https://27943.live.streamtheworld.com/JOYTURK_ROCK_SC', '🎸', 'Saf Türkçe Rock', this)">▶</button>
+                </a>
+            </div>
+        </section>
+
+        <!-- BÖLÜM: Dini, Tasavvuf & Tematik Kültür Radyoları -->
+        <section id="tematik-radyolar" class="portal-card mt-section" data-category="tematik">
+            <div class="card-head">
+                <span class="card-icon">📻</span>
+                <div>
+                    <h3>Dini, Tasavvuf & Tematik Kültür Radyoları</h3>
+                    <span class="card-subtext">Huzurlu sohbetler, ilahiler, Kur'an tilavetleri ve dini yayınlar</span>
+                </div>
+                <span class="badge-count">5</span>
+            </div>
+            <div class="radio-grid">
+                <a href="https://diyanetradyo.com/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="diyanet-radyo" title="Diyanet Radyo Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">📖</div>
+                        <div>
+                            <div class="radio-card-title">Diyanet Radyo <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Hakkın ve Hakikatin Sesi</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Diyanet Radyo', 'https://eustr73.mediatriple.net/videoonlylive/mtikoimxnztxlive/broadcast_5e3c1171d7d2a.smil/playlist.m3u8', '📖', 'Hakkın ve Hakikatin Sesi', this)">▶</button>
+                </a>
+                <a href="https://www.vavradyo.com.tr/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="vav-radyo" title="Vav Radyo Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🕊️</div>
+                        <div>
+                            <div class="radio-card-title">Vav Radyo <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Kuran ve Sünnetin Işığında</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Vav Radyo', 'https://trkvz-radyolar.ercdn.net/radyovav/playlist.m3u8', '🕊️', 'Kuran ve Sünnetin Işığında', this)">▶</button>
+                </a>
+                <a href="https://www.akradyo.net/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="akra-fm" title="Akra FM Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🌿</div>
+                        <div>
+                            <div class="radio-card-title">Akra FM <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">İlim ve İrfan Pınarı</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Akra FM', 'https://d3r5bwwuab2v60.cloudfront.net/akracanli2/_definst_/livestream_aac/playlist.m3u8', '🌿', 'İlim ve İrfan Pınarı', this)">▶</button>
+                </a>
+                <a href="https://semerkandradyo.com/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="semerkand-radyo" title="Semerkand Radyo Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🕌</div>
+                        <div>
+                            <div class="radio-card-title">Semerkand Radyo <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Gönüller Sultanı</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Semerkand Radyo', 'https://mtisvwurbfcyslive.mediatriple.net/mtisvwurbfcyslive/broadcast_58e23cb112296.smil/playlist.m3u8', '🕌', 'Gönüller Sultanı', this)">▶</button>
+                </a>
+                <a href="https://www.lalegulfm.com/" target="_blank" rel="noopener noreferrer" class="radio-card media-link" data-slug="lalegul-fm" title="Lalegül FM Resmi Web Sitesini Aç">
+                    <div class="radio-card-left">
+                        <div class="radio-card-icon">🌷</div>
+                        <div>
+                            <div class="radio-card-title">Lalegül FM <span class="radio-card-ext-icon" style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;" title="Web sitesini yeni sekmede aç">↗</span></div>
+                            <div class="radio-card-genre">Ehli Sünnetin Gür Sesi</div>
+                        </div>
+                    </div>
+                    <button type="button" class="radio-card-btn" title="Canlı Yayını Başlat / Durdur" onclick="handleCardPlay(event, 'Lalegül FM', 'https://icecast.netmedya.net/lalegulfm', '🌷', 'Ehli Sünnetin Gür Sesi', this)">▶</button>
+                </a>
+            </div>
+        </section>
+
+        <!-- 7. BÖLÜM: BÜYÜKŞEHİRLER RADYO FREKANS REHBERİ -->
+        <section id="frekans-rehberi" class="portal-card mt-section" data-category="frekans">
+            <div class="card-head">
+                <span class="card-icon">📍</span>
+                <div>
+                    <h3>Büyükşehirler Radyo FM Frekans Tablosu</h3>
+                    <span class="card-subtext">Arabanızda veya klasik radyo alıcınızda dinlemek için MHz frekans listesi</span>
+                </div>
+            </div>
+            <div class="freq-table-wrapper">
+                <table class="freq-table">
+                    <thead>
+                        <tr>
+                            <th>Radyo İstasyonu</th>
+                            <th>İstanbul</th>
+                            <th>Ankara</th>
+                            <th>İzmir</th>
+                            <th>Bursa</th>
+                            <th>Antalya</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>TRT FM</strong></td>
+                            <td><span class="freq-val">91.4</span></td>
+                            <td><span class="freq-val">88.0</span></td>
+                            <td><span class="freq-val">91.2</span></td>
+                            <td><span class="freq-val">90.2</span></td>
+                            <td><span class="freq-val">95.6</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kral FM</strong></td>
+                            <td><span class="freq-val">92.0</span></td>
+                            <td><span class="freq-val">102.4</span></td>
+                            <td><span class="freq-val">99.0</span></td>
+                            <td><span class="freq-val">92.0</span></td>
+                            <td><span class="freq-val">99.0</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Power FM</strong></td>
+                            <td><span class="freq-val">100.0</span></td>
+                            <td><span class="freq-val">100.0</span></td>
+                            <td><span class="freq-val">100.0</span></td>
+                            <td><span class="freq-val">100.0</span></td>
+                            <td><span class="freq-val">100.0</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Süper FM</strong></td>
+                            <td><span class="freq-val">90.8</span></td>
+                            <td><span class="freq-val">90.8</span></td>
+                            <td><span class="freq-val">90.8</span></td>
+                            <td><span class="freq-val">90.8</span></td>
+                            <td><span class="freq-val">90.8</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Slow Türk</strong></td>
+                            <td><span class="freq-val">95.3</span></td>
+                            <td><span class="freq-val">95.3</span></td>
+                            <td><span class="freq-val">95.3</span></td>
+                            <td><span class="freq-val">95.3</span></td>
+                            <td><span class="freq-val">95.3</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>NTV Radyo</strong></td>
+                            <td><span class="freq-val">102.8</span></td>
+                            <td><span class="freq-val">104.7</span></td>
+                            <td><span class="freq-val">105.7</span></td>
+                            <td><span class="freq-val">102.8</span></td>
+                            <td><span class="freq-val">104.7</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Alem FM</strong></td>
+                            <td><span class="freq-val">89.2</span></td>
+                            <td><span class="freq-val">89.3</span></td>
+                            <td><span class="freq-val">89.3</span></td>
+                            <td><span class="freq-val">89.2</span></td>
+                            <td><span class="freq-val">89.3</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ORTAK FOOTER BİLEŞENİ -->
+    <div id="site-footer"></div>
+
+    <!-- GERÇEK CANLI RADYO OYNATICI MOTORU (HTML5 + HLS.JS) -->
+    <script>
+        const audio = document.getElementById('portal-audio-player');
+        const playBtn = document.getElementById('radio-master-play-btn');
+        const volumeSlider = document.getElementById('radio-volume-control');
+        const volumeIcon = document.getElementById('volume-icon');
+        const titleEl = document.getElementById('player-station-title');
+        const statusEl = document.getElementById('player-status-text');
+        const avatarEl = document.getElementById('player-avatar');
+        const eqAnim = document.getElementById('player-eq');
+
+        let hlsInstance = null;
+        let currentStation = {
+            name: 'Kral Pop',
+            url: 'https://dygedge2.radyotvonline.net/kralpop/playlist.m3u8',
+            icon: '👑',
+            genre: 'Türkçe Pop Hit'
+        };
+        let lastVolume = 0.8;
+
+        function isHls(url) {
+            if (!/\.m3u8/i.test(url || '')) return false;
+            return !audio.canPlayType('application/vnd.apple.mpegurl');
+        }
+
+        function destroyHls() {
+            if (hlsInstance) {
+                try {
+                    hlsInstance.destroy();
+                } catch (e) {}
+                hlsInstance = null;
+            }
+        }
+
+        // Karttaki oynat butonuna basıldığında (Linkin tetiklenmesini engeller ve çalar)
+        function handleCardPlay(event, name, streamUrl, icon, genre, btnEl) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            const cardEl = btnEl ? btnEl.closest('.radio-card') : null;
+
+            // Eğer tıklanan radyo zaten çalıyorsa duraklat / devam et
+            if (currentStation && currentStation.name === name && (audio.src === streamUrl || (hlsInstance && currentStation.url === streamUrl))) {
+                if (audio.paused) {
+                    audio.play().then(onPlaySuccess).catch(onPlayError);
+                } else {
+                    audio.pause();
+                    playBtn.textContent = '▶';
+                    statusEl.textContent = 'Yayın duraklatıldı';
+                    eqAnim.classList.add('paused');
+                    if (btnEl) btnEl.textContent = '▶';
+                }
+                return;
+            }
+
+            // Yeni bir radyo başlat
+            playStation(name, streamUrl, icon, genre, cardEl);
+        }
+
+        function playStation(name, streamUrl, icon, genre, cardEl) {
+            currentStation = { name, url: streamUrl, icon: icon || '📻', genre: genre || 'Canlı Müzik' };
+
+            titleEl.textContent = name + ' (Canlı Yayın)';
+            avatarEl.textContent = currentStation.icon;
+            statusEl.innerHTML = '<span class="radio-loading-dot"></span>Bağlanıyor ve yayın yükleniyor...';
+            eqAnim.classList.remove('paused');
+
+            // Aktif kart vurgulaması
+            document.querySelectorAll('.radio-card').forEach(c => {
+                c.classList.remove('active');
+                const btn = c.querySelector('.radio-card-btn');
+                if (btn) btn.textContent = '▶';
+            });
+
+            if (cardEl) {
+                cardEl.classList.add('active');
+                const cardBtn = cardEl.querySelector('.radio-card-btn');
+                if (cardBtn) cardBtn.textContent = '⏸';
+            } else {
+                document.querySelectorAll('.radio-card').forEach(c => {
+                    const cardTitle = c.querySelector('.radio-card-title');
+                    if (cardTitle && cardTitle.textContent.includes(name)) {
+                        c.classList.add('active');
+                        const cardBtn = c.querySelector('.radio-card-btn');
+                        if (cardBtn) cardBtn.textContent = '⏸';
+                    }
+                });
+            }
+
+            destroyHls();
+            audio.pause();
+            audio.removeAttribute('src');
+
+            if (isHls(streamUrl)) {
+                if (window.Hls && Hls.isSupported()) {
+                    hlsInstance = new Hls({
+                        enableWorker: false,
+                        lowLatencyMode: true
+                    });
+                    hlsInstance.loadSource(streamUrl);
+                    hlsInstance.attachMedia(audio);
+                    hlsInstance.on(Hls.Events.MANIFEST_PARSED, function () {
+                        audio.play().then(onPlaySuccess).catch(onPlayError);
+                    });
+                    hlsInstance.on(Hls.Events.ERROR, function (event, data) {
+                        if (data.fatal) {
+                            console.warn('HLS Hatası:', data);
+                            handleStreamFail();
+                        }
+                    });
+                } else {
+                    audio.src = streamUrl;
+                    audio.load();
+                    audio.play().then(onPlaySuccess).catch(onPlayError);
+                }
+            } else {
+                audio.src = streamUrl;
+                audio.load();
+                audio.play().then(onPlaySuccess).catch(onPlayError);
+            }
+
+            // MediaSession entegrasyonu (Kilit ekranı ve bildirim çubuğu kontrolleri)
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: name,
+                    artist: 'Kehribar Dergisi Canlı Radyo',
+                    album: genre || 'Canlı Müzik',
+                    artwork: [
+                        { src: 'https://kehribardergisi.com/link.png', sizes: '512x512', type: 'image/png' }
+                    ]
+                });
+            }
+        }
+
+        function onPlaySuccess() {
+            playBtn.textContent = '⏸';
+            statusEl.innerHTML = '<span style="color:#10b981; font-weight:700;">● CANLI YAYIN</span> · Kesintisiz çalıyor';
+            eqAnim.classList.remove('paused');
+
+            // Aktif kartın butonunu güncelle
+            const activeCardBtn = document.querySelector('.radio-card.active .radio-card-btn');
+            if (activeCardBtn) activeCardBtn.textContent = '⏸';
+        }
+
+        function onPlayError(err) {
+            console.warn('Ses başlatma uyarısı:', err);
+            statusEl.textContent = 'Oynatmak için ▶ butonuna basın';
+            playBtn.textContent = '▶';
+            eqAnim.classList.add('paused');
+        }
+
+        function handleStreamFail() {
+            statusEl.textContent = 'Yayın hattına bağlanılamadı. Yeniden deneniyor...';
+            destroyHls();
+            setTimeout(() => {
+                if (currentStation && currentStation.url) {
+                    audio.src = currentStation.url;
+                    audio.play().then(onPlaySuccess).catch(() => {
+                        statusEl.textContent = 'İstasyon şu anda yayında değil veya yoğun. Lütfen başka bir kanal seçin.';
+                        playBtn.textContent = '▶';
+                        eqAnim.classList.add('paused');
+                    });
+                }
+            }, 2500);
+        }
+
+        // Ana oynat / duraklat butonu
+        playBtn.addEventListener('click', () => {
+            if (audio.paused || audio.ended) {
+                if (!audio.src && !hlsInstance && currentStation) {
+                    playStation(currentStation.name, currentStation.url, currentStation.icon, currentStation.genre);
+                } else {
+                    audio.play().then(onPlaySuccess).catch(onPlayError);
+                }
+            } else {
+                audio.pause();
+                playBtn.textContent = '▶';
+                statusEl.textContent = 'Yayın duraklatıldı';
+                eqAnim.classList.add('paused');
+                
+                const activeCardBtn = document.querySelector('.radio-card.active .radio-card-btn');
+                if (activeCardBtn) activeCardBtn.textContent = '▶';
+            }
+        });
+
+        // Ses Kaydırıcısı
+        volumeSlider.addEventListener('input', (e) => {
+            const vol = parseFloat(e.target.value);
+            audio.volume = vol;
+            if (vol === 0) {
+                volumeIcon.textContent = '🔇';
+            } else if (vol < 0.5) {
+                volumeIcon.textContent = '🔉';
+            } else {
+                volumeIcon.textContent = '🔊';
+            }
+        });
+
+        // Ses İkonu Tıklama (Sessize Al / Geri Aç)
+        volumeIcon.addEventListener('click', () => {
+            if (audio.volume > 0) {
+                lastVolume = audio.volume;
+                audio.volume = 0;
+                volumeSlider.value = 0;
+                volumeIcon.textContent = '🔇';
+            } else {
+                audio.volume = lastVolume || 0.8;
+                volumeSlider.value = audio.volume;
+                volumeIcon.textContent = '🔊';
+            }
+        });
+
+        audio.volume = 0.8;
+    </script>
+
+    <!-- SCRIPTS -->
+    <script src="components.js?v=2.0"></script>
+    <script src="ads.js?v=1.2"></script>
+    <script src="main.js?v=4.1"></script>
+</body>
+</html>

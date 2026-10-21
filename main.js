@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollToTop();
     initSaleModal();
     initCookieConsent();
+    initEnsonhaberSlider();
 });
 
 /* ==========================================================================
@@ -312,12 +313,12 @@ function initCategoryChips() {
             // İlgili bölüme yumuşak kaydır
             const targetMap = {
                 'gazeteler': 'ulusal-gazeteler',
-                'manset': 'gazete-mansetleri',
+                'manset': 'mansetler',
                 'haberler': 'haber-siteleri',
                 'spor': 'spor-basini',
-                'tv': 'canli-tv',
-                'radyo': 'radyolar',
-                'ekonomi': 'ekonomi',
+                'tv': 'ulusal-tv',
+                'radyo': 'pop-radyolar',
+                'ekonomi': 'ekonomi-basini',
                 'yabanci': 'dunya-basini',
                 'yerel': 'yerel-basin',
                 'yararli': 'yararli-linkler',
@@ -328,20 +329,38 @@ function initCategoryChips() {
                 'eczane': 'nobetci-eczane',
                 'akaryakit': 'akaryakit-fiyatlari',
                 'deprem': 'son-depremler',
-                'tvrehber': 'tv-rehberi'
+                'tvrehber': 'tv-rehberi',
+                'tvrehberi': 'tv-rehberi',
+                'edebiyat': 'edebiyat-dergileri',
+                'bilim': 'bilim-dergileri',
+                'tarih': 'tarih-dergileri',
+                'sanat': 'edebiyat-dergileri',
+                'platform': 'platform-dergileri',
+                'ulusal': 'ulusal-tv',
+                'haber': 'haber-tv',
+                'belgesel': 'kultur-cocuk-tv',
+                'cocuk': 'kultur-cocuk-tv',
+                'muzik': 'kultur-cocuk-tv',
+                'pop': 'pop-radyolar',
+                'slow': 'slow-radyolar',
+                'turk': 'turk-radyolar',
+                'tematik': 'yabanci-radyolar',
+                'frekans': 'frekans-rehberi',
+                'resmi': 'resmi-basini'
             };
 
-            const targetId = targetMap[filter];
-            if (targetId) {
-                const el = document.getElementById(targetId);
-                if (el) {
-                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    // Dikkat çekmek için hafif parlatma
-                    el.style.outline = '2px solid var(--brand-amber)';
-                    setTimeout(() => {
-                        el.style.outline = 'none';
-                    }, 1200);
-                }
+            let targetId = targetMap[filter];
+            let el = targetId ? document.getElementById(targetId) : null;
+            if (!el) {
+                el = document.getElementById(filter) || document.querySelector(`[data-category*="${filter}"]`);
+            }
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Dikkat çekmek için hafif parlatma
+                el.style.outline = '2px solid var(--brand-amber)';
+                setTimeout(() => {
+                    el.style.outline = 'none';
+                }, 1200);
             }
         });
     });
@@ -701,25 +720,109 @@ function initLiveMarketTicker() {
 function initPrayerTimesSystem() {
     const citySelect = document.getElementById('prayer-city-select');
     const countdownEl = document.getElementById('prayer-countdown');
+    const hijriDateEl = document.getElementById('prayer-hijri-date');
     if (!citySelect) return;
 
-    // 10 Büyükşehir Gerçekçi Başlangıç Vakitleri
-    const prayerTimesData = {
-        Istanbul: { imsak: "05:42", gunes: "07:08", ogle: "12:56", ikindi: "15:58", aksam: "18:28", yatsi: "19:48", label: "İstanbul" },
-        Ankara: { imsak: "05:28", gunes: "06:53", ogle: "12:41", ikindi: "15:44", aksam: "18:14", yatsi: "19:33", label: "Ankara" },
-        Izmir: { imsak: "05:52", gunes: "07:16", ogle: "13:04", ikindi: "16:08", aksam: "18:37", yatsi: "19:56", label: "İzmir" },
-        Bursa: { imsak: "05:44", gunes: "07:09", ogle: "12:57", ikindi: "15:59", aksam: "18:29", yatsi: "19:49", label: "Bursa" },
-        Antalya: { imsak: "05:39", gunes: "07:01", ogle: "12:49", ikindi: "15:54", aksam: "18:23", yatsi: "19:40", label: "Antalya" },
-        Adana: { imsak: "05:27", gunes: "06:48", ogle: "12:35", ikindi: "15:42", aksam: "18:10", yatsi: "19:26", label: "Adana" },
-        Konya: { imsak: "05:35", gunes: "06:58", ogle: "12:45", ikindi: "15:50", aksam: "18:19", yatsi: "19:36", label: "Konya" },
-        Gaziantep: { imsak: "05:20", gunes: "06:41", ogle: "12:28", ikindi: "15:35", aksam: "18:03", yatsi: "19:19", label: "Gaziantep" },
-        Trabzon: { imsak: "05:07", gunes: "06:35", ogle: "12:25", ikindi: "15:24", aksam: "17:58", yatsi: "19:20", label: "Trabzon" },
-        Diyarbakir: { imsak: "05:11", gunes: "06:33", ogle: "12:20", ikindi: "15:27", aksam: "17:55", yatsi: "19:12", label: "Diyarbakır" }
-    };
+    const ISLAMIC_API_KEY = 'Dln6pnzdn1Fis8Ddmzjqie9yiJ6UYkM0txkcJ2cGjbwD008p';
 
-    function renderPrayerTimes(cityKey) {
-        const timings = prayerTimesData[cityKey] || prayerTimesData.Istanbul;
-        
+    // 81 Türkiye İli Koordinat Tablosu
+    const TURKEY_CITIES = [
+        { id: 1, name: 'Adana', lat: 37.0000, lon: 35.3213 },
+        { id: 2, name: 'Adıyaman', lat: 37.7648, lon: 38.2786 },
+        { id: 3, name: 'Afyonkarahisar', lat: 38.7507, lon: 30.5567 },
+        { id: 4, name: 'Ağrı', lat: 39.7191, lon: 43.0503 },
+        { id: 5, name: 'Amasya', lat: 40.6534, lon: 35.8331 },
+        { id: 6, name: 'Ankara', lat: 39.9334, lon: 32.8597 },
+        { id: 7, name: 'Antalya', lat: 36.8969, lon: 30.7133 },
+        { id: 8, name: 'Artvin', lat: 41.1828, lon: 41.8183 },
+        { id: 9, name: 'Aydın', lat: 37.8560, lon: 27.8416 },
+        { id: 10, name: 'Balıkesir', lat: 39.6484, lon: 27.8826 },
+        { id: 11, name: 'Bilecik', lat: 40.1451, lon: 29.9799 },
+        { id: 12, name: 'Bingöl', lat: 38.8855, lon: 40.4966 },
+        { id: 13, name: 'Bitlis', lat: 38.4006, lon: 42.1095 },
+        { id: 14, name: 'Bolu', lat: 40.7358, lon: 31.6061 },
+        { id: 15, name: 'Burdur', lat: 37.7203, lon: 30.2908 },
+        { id: 16, name: 'Bursa', lat: 40.1885, lon: 29.0610 },
+        { id: 17, name: 'Çanakkale', lat: 40.1553, lon: 26.4142 },
+        { id: 18, name: 'Çankırı', lat: 40.6013, lon: 33.6134 },
+        { id: 19, name: 'Çorum', lat: 40.5506, lon: 34.9556 },
+        { id: 20, name: 'Denizli', lat: 37.7765, lon: 29.0864 },
+        { id: 21, name: 'Diyarbakır', lat: 37.9144, lon: 40.2306 },
+        { id: 22, name: 'Edirne', lat: 41.6772, lon: 26.5557 },
+        { id: 23, name: 'Elazığ', lat: 38.6810, lon: 39.2264 },
+        { id: 24, name: 'Erzincan', lat: 39.7500, lon: 39.5000 },
+        { id: 25, name: 'Erzurum', lat: 39.9000, lon: 41.2700 },
+        { id: 26, name: 'Eskişehir', lat: 39.7767, lon: 30.5206 },
+        { id: 27, name: 'Gaziantep', lat: 37.0662, lon: 37.3833 },
+        { id: 28, name: 'Giresun', lat: 40.9128, lon: 38.3895 },
+        { id: 29, name: 'Gümüşhane', lat: 40.4600, lon: 39.4700 },
+        { id: 30, name: 'Hakkâri', lat: 37.5833, lon: 43.7333 },
+        { id: 31, name: 'Hatay', lat: 36.4018, lon: 36.3498 },
+        { id: 32, name: 'Isparta', lat: 37.7648, lon: 30.5566 },
+        { id: 33, name: 'Mersin', lat: 36.8000, lon: 34.6333 },
+        { id: 34, name: 'İstanbul', lat: 41.0082, lon: 28.9784 },
+        { id: 35, name: 'İzmir', lat: 38.4192, lon: 27.1287 },
+        { id: 36, name: 'Kars', lat: 40.6167, lon: 43.1000 },
+        { id: 37, name: 'Kastamonu', lat: 41.3887, lon: 33.7827 },
+        { id: 38, name: 'Kayseri', lat: 38.7312, lon: 35.4787 },
+        { id: 39, name: 'Kırklareli', lat: 41.7333, lon: 27.2167 },
+        { id: 40, name: 'Kırşehir', lat: 39.1425, lon: 34.1709 },
+        { id: 41, name: 'Kocaeli', lat: 40.8533, lon: 29.8815 },
+        { id: 42, name: 'Konya', lat: 37.8667, lon: 32.4833 },
+        { id: 43, name: 'Kütahya', lat: 39.4167, lon: 29.9833 },
+        { id: 44, name: 'Malatya', lat: 38.3552, lon: 38.3095 },
+        { id: 45, name: 'Manisa', lat: 38.6191, lon: 27.4289 },
+        { id: 46, name: 'Kahramanmaraş', lat: 37.5858, lon: 36.9371 },
+        { id: 47, name: 'Mardin', lat: 37.3212, lon: 40.7245 },
+        { id: 48, name: 'Muğla', lat: 37.2153, lon: 28.3636 },
+        { id: 49, name: 'Muş', lat: 38.7432, lon: 41.5064 },
+        { id: 50, name: 'Nevşehir', lat: 38.6244, lon: 34.7142 },
+        { id: 51, name: 'Niğde', lat: 37.9667, lon: 34.6833 },
+        { id: 52, name: 'Ordu', lat: 40.9839, lon: 37.8764 },
+        { id: 53, name: 'Rize', lat: 41.0201, lon: 40.5234 },
+        { id: 54, name: 'Sakarya', lat: 40.7569, lon: 30.3783 },
+        { id: 55, name: 'Samsun', lat: 41.2928, lon: 36.3313 },
+        { id: 56, name: 'Siirt', lat: 37.9333, lon: 41.9500 },
+        { id: 57, name: 'Sinop', lat: 42.0231, lon: 35.1531 },
+        { id: 58, name: 'Sivas', lat: 39.7477, lon: 37.0179 },
+        { id: 59, name: 'Tekirdağ', lat: 40.9833, lon: 27.5167 },
+        { id: 60, name: 'Tokat', lat: 40.3167, lon: 36.5500 },
+        { id: 61, name: 'Trabzon', lat: 41.0015, lon: 39.7178 },
+        { id: 62, name: 'Tunceli', lat: 39.1079, lon: 39.5401 },
+        { id: 63, name: 'Şanlıurfa', lat: 37.1591, lon: 38.7969 },
+        { id: 64, name: 'Uşak', lat: 38.6823, lon: 29.4082 },
+        { id: 65, name: 'Van', lat: 38.4891, lon: 43.4089 },
+        { id: 66, name: 'Yozgat', lat: 39.8181, lon: 34.8147 },
+        { id: 67, name: 'Zonguldak', lat: 41.4564, lon: 31.7987 },
+        { id: 68, name: 'Aksaray', lat: 38.3687, lon: 34.0370 },
+        { id: 69, name: 'Bayburt', lat: 40.2552, lon: 40.2249 },
+        { id: 70, name: 'Karaman', lat: 37.1759, lon: 33.2287 },
+        { id: 71, name: 'Kırıkkale', lat: 39.8468, lon: 33.5153 },
+        { id: 72, name: 'Batman', lat: 37.8812, lon: 41.1293 },
+        { id: 73, name: 'Şırnak', lat: 37.5164, lon: 42.4594 },
+        { id: 74, name: 'Bartın', lat: 41.6344, lon: 32.3375 },
+        { id: 75, name: 'Ardahan', lat: 41.1105, lon: 42.7022 },
+        { id: 76, name: 'Iğdır', lat: 39.9196, lon: 44.0454 },
+        { id: 77, name: 'Yalova', lat: 40.6500, lon: 29.2667 },
+        { id: 78, name: 'Karabük', lat: 41.2061, lon: 32.6204 },
+        { id: 79, name: 'Kilis', lat: 36.7184, lon: 37.1212 },
+        { id: 80, name: 'Osmaniye', lat: 37.0742, lon: 36.2478 },
+        { id: 81, name: 'Düzce', lat: 40.8438, lon: 31.1565 }
+    ];
+
+    // Şehir dropdown'ını 81 il ile doldur
+    citySelect.innerHTML = TURKEY_CITIES.map(c => 
+        `<option value="${c.id}">${c.name} (${c.id < 10 ? '0' + c.id : c.id})</option>`
+    ).join('');
+
+    // Kayıtlı şehri getir veya varsayılan İstanbul (34)
+    const savedCityId = parseInt(localStorage.getItem('kehribar_islam_city'), 10) || 34;
+    citySelect.value = savedCityId;
+
+    let currentPrayerList = null;
+    let hpCountdownTimer = null;
+
+    function renderTimes(times, dateInfo) {
         const elImsak = document.getElementById('prayer-imsak');
         const elGunes = document.getElementById('prayer-gunes');
         const elOgle = document.getElementById('prayer-ogle');
@@ -727,111 +830,134 @@ function initPrayerTimesSystem() {
         const elAksam = document.getElementById('prayer-aksam');
         const elYatsi = document.getElementById('prayer-yatsi');
 
-        if (elImsak) elImsak.textContent = timings.imsak;
-        if (elGunes) elGunes.textContent = timings.gunes;
-        if (elOgle) elOgle.textContent = timings.ogle;
-        if (elIkindi) elIkindi.textContent = timings.ikindi;
-        if (elAksam) elAksam.textContent = timings.aksam;
-        if (elYatsi) elYatsi.textContent = timings.yatsi;
+        if (elImsak) elImsak.textContent = times.Imsak || times.Fajr || '--:--';
+        if (elGunes) elGunes.textContent = times.Sunrise || '--:--';
+        if (elOgle) elOgle.textContent = times.Dhuhr || '--:--';
+        if (elIkindi) elIkindi.textContent = times.Asr || '--:--';
+        if (elAksam) elAksam.textContent = times.Maghrib || times.Sunset || '--:--';
+        if (elYatsi) elYatsi.textContent = times.Isha || '--:--';
 
-        updateCountdownAndHighlight(timings);
-    }
-
-    function timeToMinutes(str) {
-        const parts = str.split(':');
-        return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
-    }
-
-    function updateCountdownAndHighlight(timings) {
-        const now = new Date();
-        const currentMins = now.getHours() * 60 + now.getMinutes();
-
-        const prayers = [
-            { id: 'imsak', name: 'İmsak', time: timings.imsak, mins: timeToMinutes(timings.imsak) },
-            { id: 'gunes', name: 'Güneş', time: timings.gunes, mins: timeToMinutes(timings.gunes) },
-            { id: 'ogle', name: 'Öğle', time: timings.ogle, mins: timeToMinutes(timings.ogle) },
-            { id: 'ikindi', name: 'İkindi', time: timings.ikindi, mins: timeToMinutes(timings.ikindi) },
-            { id: 'aksam', name: 'Akşam', time: timings.aksam, mins: timeToMinutes(timings.aksam) },
-            { id: 'yatsi', name: 'Yatsı', time: timings.yatsi, mins: timeToMinutes(timings.yatsi) }
+        currentPrayerList = [
+            { id: 'imsak', cardId: 'hp-card-imsak', name: 'İmsak', time: times.Imsak || times.Fajr },
+            { id: 'gunes', cardId: 'hp-card-gunes', name: 'Güneş', time: times.Sunrise },
+            { id: 'ogle', cardId: 'hp-card-ogle', name: 'Öğle', time: times.Dhuhr },
+            { id: 'ikindi', cardId: 'hp-card-ikindi', name: 'İkindi', time: times.Asr },
+            { id: 'aksam', cardId: 'hp-card-aksam', name: 'Akşam', time: times.Maghrib || times.Sunset },
+            { id: 'yatsi', cardId: 'hp-card-yatsi', name: 'Yatsı', time: times.Isha }
         ];
 
-        let nextPrayer = null;
-        let diffMins = 0;
-
-        for (const p of prayers) {
-            if (p.mins > currentMins) {
-                nextPrayer = p;
-                diffMins = p.mins - currentMins;
-                break;
+        if (hijriDateEl && dateInfo && dateInfo.hijri) {
+            if (typeof dateInfo.hijri === 'object' && dateInfo.hijri.date) {
+                hijriDateEl.textContent = `🌙 ${dateInfo.hijri.date} Hicrî`;
+            } else if (dateInfo.hijri.day && dateInfo.hijri.month) {
+                hijriDateEl.textContent = `🌙 ${dateInfo.hijri.day} ${dateInfo.hijri.month.tr || dateInfo.hijri.month.en} ${dateInfo.hijri.year}`;
             }
         }
 
-        // Eğer yatsıdan sonra ise yarınki imsak vakti
-        if (!nextPrayer) {
-            nextPrayer = prayers[0];
-            diffMins = (24 * 60 - currentMins) + prayers[0].mins;
-        }
-
-        // Kartları vurgula
-        const cards = document.querySelectorAll('.prayer-card');
-        cards.forEach(card => card.classList.remove('active-prayer'));
-        const activeCard = document.querySelector(`.prayer-card[data-prayer="${nextPrayer.id}"]`);
-        if (activeCard) activeCard.classList.add('active-prayer');
-
-        // Geri sayım metni
-        const hours = Math.floor(diffMins / 60);
-        const mins = diffMins % 60;
-        let diffStr = '';
-        if (hours > 0) diffStr += `${hours} saat `;
-        diffStr += `${mins} dakika`;
-
-        if (countdownEl) {
-            countdownEl.textContent = `⏳ ${nextPrayer.name} Vaktine: ${diffStr} kaldı`;
-        }
+        startHpCountdown();
     }
 
-    // Aladhan Kamu API (Diyanet Metodu: 13) Canlı Senkronizasyon
-    async function fetchLivePrayerTimes(cityKey) {
-        try {
-            const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(cityKey)}&country=Turkey&method=13`, { cache: 'no-cache' });
-            if (res.ok) {
-                const data = await res.json();
-                if (data && data.data && data.data.timings) {
-                    const t = data.data.timings;
-                    prayerTimesData[cityKey] = {
-                        imsak: t.Imsak ? t.Imsak.slice(0, 5) : prayerTimesData[cityKey].imsak,
-                        gunes: t.Sunrise ? t.Sunrise.slice(0, 5) : prayerTimesData[cityKey].gunes,
-                        ogle: t.Dhuhr ? t.Dhuhr.slice(0, 5) : prayerTimesData[cityKey].ogle,
-                        ikindi: t.Asr ? t.Asr.slice(0, 5) : prayerTimesData[cityKey].ikindi,
-                        aksam: t.Sunset ? t.Sunset.slice(0, 5) : (t.Maghrib ? t.Maghrib.slice(0, 5) : prayerTimesData[cityKey].aksam),
-                        yatsi: t.Isha ? t.Isha.slice(0, 5) : prayerTimesData[cityKey].yatsi,
-                        label: cityKey
-                    };
-                    renderPrayerTimes(cityKey);
+    function startHpCountdown() {
+        if (hpCountdownTimer) clearInterval(hpCountdownTimer);
+
+        function tick() {
+            if (!currentPrayerList || currentPrayerList.length === 0) return;
+
+            const now = new Date();
+            const currentMins = now.getHours() * 60 + now.getMinutes();
+            const currentSecs = now.getSeconds();
+
+            const parsed = currentPrayerList.map(p => {
+                const parts = (p.time || '00:00').split(':');
+                const m = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+                return { ...p, minutes: m };
+            });
+
+            let activeIdx = 0;
+            for (let i = 0; i < parsed.length; i++) {
+                if (currentMins >= parsed[i].minutes) {
+                    activeIdx = i;
                 }
             }
-        } catch (e) {
-            // Sessizce başlangıç verileriyle devam et
+
+            const nextIdx = (activeIdx + 1) % parsed.length;
+            const nextPrayer = parsed[nextIdx];
+
+            let diffMinutes = nextPrayer.minutes - currentMins;
+            if (diffMinutes <= 0) {
+                diffMinutes += 24 * 60;
+            }
+
+            let remainSecTotal = diffMinutes * 60 - currentSecs;
+            if (remainSecTotal < 0) remainSecTotal = 0;
+
+            const remHours = Math.floor(remainSecTotal / 3600);
+            const remMins = Math.floor((remainSecTotal % 3600) / 60);
+            const remSecs = remainSecTotal % 60;
+
+            const format = (n) => (n < 10 ? '0' + n : n);
+            const timerStr = `${format(remHours)}:${format(remMins)}:${format(remSecs)}`;
+
+            if (countdownEl) {
+                countdownEl.innerHTML = `<span>⏳ Sonraki Vakit (<strong>${nextPrayer.name}</strong>): <strong>${timerStr}</strong></span>`;
+            }
+
+            // Kartları vurgula
+            currentPrayerList.forEach((p, idx) => {
+                const card = document.getElementById(p.cardId);
+                if (card) {
+                    if (idx === activeIdx) {
+                        card.classList.add('active-prayer');
+                    } else {
+                        card.classList.remove('active-prayer');
+                    }
+                }
+            });
+        }
+
+        tick();
+        hpCountdownTimer = setInterval(tick, 1000);
+    }
+
+    async function fetchPrayerTimes(city) {
+        if (countdownEl) countdownEl.textContent = `${city.name} için vakitler güncelleniyor...`;
+
+        try {
+            // 1. Tercih: IslamicAPI (lat & lon ile)
+            const apiUrl = `https://islamicapi.com/api/v1/prayer-time/?lat=${city.lat}&lon=${city.lon}&api_key=${ISLAMIC_API_KEY}`;
+            const res = await fetch(apiUrl);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const json = await res.json();
+
+            if (json && json.data && json.data.times) {
+                renderTimes(json.data.times, json.data.date);
+                return;
+            }
+            throw new Error('IslamicAPI veri hatası');
+        } catch (err) {
+            console.warn('IslamicAPI hatası, Aladhan yedeğine geçiliyor:', err);
+            try {
+                const bUrl = `https://api.aladhan.com/v1/timings?latitude=${city.lat}&longitude=${city.lon}&method=13`;
+                const bRes = await fetch(bUrl);
+                const bJson = await bRes.json();
+                if (bJson && bJson.data && bJson.data.timings) {
+                    renderTimes(bJson.data.timings, bJson.data.date);
+                }
+            } catch (bErr) {
+                console.error('Yedek API de başarısız:', bErr);
+            }
         }
     }
 
-    // İlk çalıştırma
-    renderPrayerTimes(citySelect.value);
-    fetchLivePrayerTimes(citySelect.value);
-
-    citySelect.addEventListener('change', () => {
-        const cityKey = citySelect.value;
-        renderPrayerTimes(cityKey);
-        fetchLivePrayerTimes(cityKey);
+    citySelect.addEventListener('change', function () {
+        const selectedId = parseInt(this.value, 10);
+        const city = TURKEY_CITIES.find(c => c.id === selectedId) || TURKEY_CITIES[33];
+        localStorage.setItem('kehribar_islam_city', city.id);
+        fetchPrayerTimes(city);
     });
 
-    // Her 30 saniyede bir geri sayımı tazele
-    setInterval(() => {
-        const currentCity = citySelect.value;
-        if (prayerTimesData[currentCity]) {
-            updateCountdownAndHighlight(prayerTimesData[currentCity]);
-        }
-    }, 30000);
+    const activeCity = TURKEY_CITIES.find(c => c.id === savedCityId) || TURKEY_CITIES[33];
+    fetchPrayerTimes(activeCity);
 }
 
 /* ==========================================================================
@@ -2010,5 +2136,482 @@ function initJobBoardSystem() {
     setTimeout(fetchLiveJobFeeds, 1200);
 }
 
+/* ==========================================================================
+   18. EN SON HABERLER SLAYT SİSTEMİ (ENSONHABER.COM CANLI RSS)
+   ========================================================================== */
+function initEnsonhaberSlider() {
+    const wrapper = document.getElementById('esh-slider-wrapper');
+    const track = document.getElementById('esh-slider-track');
+    const dotsContainer = document.getElementById('esh-dots');
+    const counterEl = document.getElementById('esh-counter');
+    const prevBtn = document.getElementById('esh-prev-btn');
+    const nextBtn = document.getElementById('esh-next-btn');
+    const liveIndicator = document.getElementById('esh-live-indicator');
 
+    if (!wrapper || !track) return;
 
+    let currentIndex = 0;
+    let slidesData = [];
+    let autoPlayTimer = null;
+    let isHovered = false;
+
+    // HTML Kaçış Yardımcısı
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    // İlk ve Yedek Canlı Haber Veri Kümesi (Ensonhaber.com Canlı RSS Akışından)
+    const fallbackNewsItems = [
+        {
+            title: "Yunus Akgün, Galatasaray tarihine geçti!",
+            link: "https://www.ensonhaber.com/yunus-akgun-galatasaray-tarihine-gecti-h1575707",
+            category: "Şampiyonlar Ligi",
+            desc: "Galatasaray'ın Lille ile oynadığı Şampiyonlar Ligi mücadelesinde Yunus Akgün, karşılaşmanın başında tarihe geçti.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8ef50a5fa5537.jpg?w=1200&h=675",
+            time: "19:59"
+        },
+        {
+            title: "Gaziantep FK'da olağanüstü seçimli genel kurul kararı alındı",
+            link: "https://www.ensonhaber.com/gaziantep-fkda-olaganustu-secimli-genel-kurul-karari-alindi-h1575706",
+            category: "Futbol",
+            desc: "Gaziantep Futbol Kulübü, olağanüstü seçimli genel kurulun 5 Kasım Perşembe günü gerçekleştirileceğini duyurdu.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8ef22a27cb178.jpg?w=1200&h=675",
+            time: "19:58"
+        },
+        {
+            title: "Zonguldak'ta 3 katlı bina çöktü",
+            link: "https://www.ensonhaber.com/zonguldakta-3-katli-bina-coktu-h1575701",
+            category: "3. Sayfa",
+            desc: "Zonguldak'ta daha önce kısmi göçük yaşanan bölgede 3 katlı bina çöktü, arama kurtarma çalışmaları sürüyor.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8e47f29b71479.jpg?w=1200&h=675",
+            time: "19:56"
+        },
+        {
+            title: "Lille - Galatasaray - CANLI SKOR",
+            link: "https://www.ensonhaber.com/lille-galatasaray-macinin-ilk-11leri-h1575696",
+            category: "Şampiyonlar Ligi",
+            desc: "Galatasaray, UEFA Şampiyonlar Ligi'nin 3. haftasında deplasmanda Fransız temsilcisi Lille ile mücadele ediyor.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8ee954dcf2347.jpg?w=1200&h=675",
+            time: "19:42"
+        },
+        {
+            title: "Pierre Sage: İlk golü atarak Beşiktaş'ın oyun planını değiştirmesini sağlamalıyız",
+            link: "https://www.ensonhaber.com/pierre-sage-ilk-golu-atarak-besiktasin-oyun-planini-degistirmesini-saglamaliyiz-h1575705",
+            category: "Avrupa Ligi",
+            desc: "Pierre Sage, Beşiktaş karşılaşmasında ilk golü atarak avantaj yakalamayı hedeflediklerini ifade etti.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8ead03f9f4713.jpg?w=1200&h=675",
+            time: "19:40"
+        },
+        {
+            title: "Milas Belediyesi'ne yönelik soruşturmada 6 şüpheli daha gözaltına alındı",
+            link: "https://www.ensonhaber.com/milas-belediyesine-yonelik-sorusturmada-6-supheli-daha-gozaltina-alindi-h1575704",
+            category: "Gündem",
+            desc: "Milas Belediyesi'ne yönelik soruşturma kapsamında gözaltı sayısı 35'e yükseldi.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8ea2acf344865.jpg?w=1200&h=675",
+            time: "19:37"
+        },
+        {
+            title: "Başakşehir ile Zenit veteranlar dostluk maçı yaptı",
+            link: "https://www.ensonhaber.com/basaksehir-ile-zenit-veteranlar-dostluk-maci-yapti-h1575703",
+            category: "Futbol",
+            desc: "İstanbul Başakşehir ile Rusya'nın Zenit ekibinin veteran futbolcuları arasında dostluk maçı yapıldı.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8e9eabe3c7901.jpg?w=1200&h=675",
+            time: "19:36"
+        },
+        {
+            title: "İstanbul'da park halindeki otomobile düzenlenen silahlı saldırıda bir kişi öldü",
+            link: "https://www.ensonhaber.com/istanbulda-park-halindeki-otomobile-duzenlenen-silahli-saldirida-bir-kisi-oldu-h1575702",
+            category: "3. Sayfa",
+            desc: "Kağıthane'de silahlı saldırıya uğrayan otomobildeki bir kişi hayatını kaybetti, polis geniş çaplı inceleme başlattı.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8e78e5cb81280.jpg?w=1200&h=675",
+            time: "19:26"
+        },
+        {
+            title: "Adana'da kasada oturan çocuğu başından vuran şüpheli yakalandı",
+            link: "https://www.ensonhaber.com/adanada-kasada-oturan-cocugu-basindan-vuran-supheli-yakalandi-h1575691",
+            category: "3. Sayfa",
+            desc: "Seyhan ilçesinde kasada oturan 15 yaşındaki çocuğu silahla yaralayan şüpheli gözaltına alındı.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8d98c8c189761.jpg?w=1200&h=675",
+            time: "19:15"
+        },
+        {
+            title: "İstanbul'da boşanma aşamasındaki eşine ürün satmaya çalışan kasabı öldürdü",
+            link: "https://www.ensonhaber.com/istanbulda-bosanma-asamasindaki-esine-urun-satmaya-calisan-kasabi-oldurdu-h1575647",
+            category: "3. Sayfa",
+            desc: "Bayrampaşa'da yaşanan kavgada kasap bıçaklı saldırı sonucu hayatını kaybetti.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8c5c398149462.jpg?w=1200&h=675",
+            time: "19:15"
+        },
+        {
+            title: "Milli Eğitim Bakanı Yusuf Tekin, CHP'yi ziyaret etti",
+            link: "https://www.ensonhaber.com/yusuf-tekin-chpyi-ziyaret-etti-h1575673",
+            category: "Eğitim",
+            desc: "Milli Eğitim Bakanı Yusuf Tekin, görüşmelerde bulunmak üzere CHP Genel Merkezi'ni ziyaret etti.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8d2a519b91925.jpg?w=1200&h=675",
+            time: "19:07"
+        },
+        {
+            title: "Wilfried Singo'dan Lille maçı öncesi sakatlık açıklaması",
+            link: "https://www.ensonhaber.com/wilfried-singodan-lille-maci-oncesi-sakatlik-aciklamasi-h1575700",
+            category: "Şampiyonlar Ligi",
+            desc: "Galatasaraylı futbolcu Wilfried Singo, iyileşme sürecinin planlandığı gibi gittiğini belirtti.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8e165cba9f767.jpg?w=1200&h=675",
+            time: "19:00"
+        },
+        {
+            title: "Akın Gürlek: Piyasalarda manipülatif işlem yapan 404 kişi hakkında adli işlem yapıldı",
+            link: "https://www.ensonhaber.com/akin-gurlek-piyasalarda-manipulatif-islem-yapan-404-kisi-hakkinda-adli-islem-yapildi-h1575699",
+            category: "Gündem",
+            desc: "Sermaye piyasalarında manipülatif işlem yapan şüpheliler hakkında adli süreçler kararlılıkla sürdürülüyor.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8e0cd29255487.jpg?w=1200&h=675",
+            time: "18:49"
+        },
+        {
+            title: "Vincenzo Montella alacaklarından vazgeçti, Adana Demirspor teşekkür etti",
+            link: "https://www.ensonhaber.com/vincenzo-montella-alacaklarindan-vazgecti-adana-demirspor-tesekkur-etti-h1575698",
+            category: "Futbol",
+            desc: "Adana Demirspor Kulübü, alacaklarından feragat eden eski teknik direktörüne teşekkür mesajı yayınladı.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8dcd2ad571171.jpg?w=1200&h=675",
+            time: "18:40"
+        },
+        {
+            title: "CHP'de 3 isim disipline sevk edildi",
+            link: "https://www.ensonhaber.com/chpde-3-isim-disipline-sevk-edildi-h1575697",
+            category: "Politika",
+            desc: "CHP parti yönetimi tarafından alınan kararla 3 isim tedbirli olarak disipline sevk edildi.",
+            image: "https://imgcdn.ensonhaber.com/media/esh/2026/10/21/6ad8db613effc367.jpg?w=1200&h=675",
+            time: "18:36"
+        }
+    ];
+
+    // Slaytları Ekrana Basan Fonksiyon
+    function renderSlides(items) {
+        if (!items || items.length === 0) return;
+        slidesData = items;
+        track.innerHTML = '';
+        if (dotsContainer) dotsContainer.innerHTML = '';
+
+        items.forEach((item, idx) => {
+            // Slayt Kartı
+            const slide = document.createElement('a');
+            slide.href = item.link || 'https://www.ensonhaber.com';
+            slide.target = '_blank';
+            slide.rel = 'noopener noreferrer';
+            slide.className = `esh-slide ${idx === 0 ? 'active' : ''}`;
+            slide.setAttribute('data-index', idx);
+            slide.setAttribute('title', item.title);
+
+            const fallbackImg = 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=1200&auto=format&fit=crop&q=80';
+            const imgSrc = item.image || fallbackImg;
+
+            slide.innerHTML = `
+                <img src="${imgSrc}" alt="${escapeHtml(item.title)}" class="esh-slide-img" loading="${idx === 0 ? 'eager' : 'lazy'}" onerror="this.onerror=null;this.src='${fallbackImg}';">
+                <div class="esh-slide-overlay">
+                    <div class="esh-slide-top">
+                        <span class="esh-cat-badge">⚡ ${escapeHtml(item.category || 'En Son Haber')}</span>
+                        <span class="esh-time-badge">🕒 ${escapeHtml(item.time || 'Az Önce')}</span>
+                    </div>
+                    <div class="esh-slide-bottom">
+                        <h4 class="esh-slide-title">${escapeHtml(item.title)}</h4>
+                        ${item.desc ? `<p class="esh-slide-desc">${escapeHtml(item.desc)}</p>` : ''}
+                        <div class="esh-read-row">
+                            <span class="esh-read-btn">Haberi Oku <span aria-hidden="true">→</span></span>
+                            <span style="font-size:0.75rem; opacity:0.85; color:#cbd5e1; font-weight:600;">Ensonhaber.com</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            track.appendChild(slide);
+
+            // Alt Noktalar (Dots)
+            if (dotsContainer) {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = `esh-dot ${idx === 0 ? 'active' : ''}`;
+                dot.setAttribute('data-slide', idx);
+                dot.setAttribute('aria-label', `Haber ${idx + 1}`);
+                dot.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    goToSlide(idx);
+                });
+                dotsContainer.appendChild(dot);
+            }
+        });
+
+        currentIndex = 0;
+        updateSliderUI();
+    }
+
+    // Aktif Slaytı Değiştirme
+    function goToSlide(newIndex) {
+        if (!slidesData.length) return;
+        const total = slidesData.length;
+        if (newIndex < 0) {
+            currentIndex = total - 1;
+        } else if (newIndex >= total) {
+            currentIndex = 0;
+        } else {
+            currentIndex = newIndex;
+        }
+        updateSliderUI();
+    }
+
+    function nextSlide() {
+        goToSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+        goToSlide(currentIndex - 1);
+    }
+
+    function updateSliderUI() {
+        const slides = track.querySelectorAll('.esh-slide');
+        const dots = dotsContainer ? dotsContainer.querySelectorAll('.esh-dot') : [];
+
+        slides.forEach((sl, idx) => {
+            if (idx === currentIndex) {
+                sl.classList.add('active');
+            } else {
+                sl.classList.remove('active');
+            }
+        });
+
+        dots.forEach((dt, idx) => {
+            if (idx === currentIndex) {
+                dt.classList.add('active');
+            } else {
+                dt.classList.remove('active');
+            }
+        });
+
+        if (counterEl && slidesData.length > 0) {
+            counterEl.textContent = `${currentIndex + 1} / ${slidesData.length}`;
+        }
+    }
+
+    // Otomatik Geçiş (4.5 Saniyede Bir)
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayTimer = setInterval(() => {
+            if (!isHovered) {
+                nextSlide();
+            }
+        }, 4500);
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayTimer) {
+            clearInterval(autoPlayTimer);
+            autoPlayTimer = null;
+        }
+    }
+
+    // Fare üzerine gelince duraklatma (Pause on hover)
+    wrapper.addEventListener('mouseenter', () => { isHovered = true; });
+    wrapper.addEventListener('mouseleave', () => { isHovered = false; });
+
+    // Buton Dinleyicileri
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            prevSlide();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            nextSlide();
+        });
+    }
+
+    // Klavye Yön Tuşları ile Kontrol
+    wrapper.setAttribute('tabindex', '0');
+    wrapper.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    // Mobil Dokunmatik Kaydırma (Touch Swipe) Desteği
+    let touchStartX = 0;
+    let touchEndX = 0;
+    wrapper.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    wrapper.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchEndX - touchStartX;
+        if (Math.abs(diff) > 40) {
+            if (diff < 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+    }, { passive: true });
+
+    // XML Metnini Güvenli ve Zengin Şekilde Ayrıştıran Fonksiyon
+    function parseRssXml(xmlText) {
+        const items = [];
+        try {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+            const itemNodes = xmlDoc.querySelectorAll('item');
+
+            itemNodes.forEach((node, i) => {
+                if (i >= 15) return;
+                const titleNode = node.querySelector('title');
+                const linkNode = node.querySelector('link');
+                const catNode = node.querySelector('category');
+                const descNode = node.querySelector('description');
+                const pubNode = node.querySelector('pubDate');
+
+                const title = titleNode ? titleNode.textContent.replace(/<!\[CDATA\[|\]\]>/g, '').trim() : '';
+                const link = linkNode ? linkNode.textContent.trim() : '';
+                const category = catNode ? catNode.textContent.replace(/<!\[CDATA\[|\]\]>/g, '').trim() : 'En Son Haber';
+                const desc = descNode ? descNode.textContent.replace(/<[^>]+>/g, '').slice(0, 140).trim() : '';
+                const pubDate = pubNode ? pubNode.textContent.trim() : '';
+
+                // Görsel Arama: media:content, enclosure veya html içinden
+                let image = '';
+                const mediaContent = node.getElementsByTagNameNS('*', 'content');
+                if (mediaContent && mediaContent.length > 0) {
+                    image = mediaContent[0].getAttribute('url') || '';
+                }
+                if (!image) {
+                    const enc = node.querySelector('enclosure');
+                    if (enc && (enc.getAttribute('type') || '').includes('image')) {
+                        image = enc.getAttribute('url') || '';
+                    }
+                }
+                if (!image) {
+                    const nodeXml = node.innerHTML || '';
+                    const m = nodeXml.match(/url=["']([^"']+)["']/i) || nodeXml.match(/src=["']([^"']+)["']/i);
+                    if (m) image = m[1];
+                }
+
+                let timeStr = 'Az Önce';
+                if (pubDate) {
+                    try {
+                        const d = new Date(pubDate);
+                        if (!isNaN(d.getTime())) {
+                            timeStr = d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+                        }
+                    } catch (e) {}
+                }
+
+                if (title && (link || image)) {
+                    items.push({
+                        title,
+                        link: link || 'https://www.ensonhaber.com',
+                        category,
+                        desc,
+                        image: image.replace(/&amp;/g, '&'),
+                        time: timeStr
+                    });
+                }
+            });
+        } catch (e) {
+            // Regex yedeği aşağıda devreye girecek
+        }
+
+        // DOMParser başarısız olduysa veya 0 sonuç verdiyse Regex ile ayrıştır
+        if (items.length === 0) {
+            const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+            let match;
+            while ((match = itemRegex.exec(xmlText)) !== null && items.length < 15) {
+                const c = match[1];
+                const titleM = c.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/);
+                const linkM = c.match(/<link>([\s\S]*?)<\/link>/);
+                const catM = c.match(/<category>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/category>/);
+                const descM = c.match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/);
+                const imgM = c.match(/url="([^"]+)"/) || c.match(/<img[^>]+src=["']([^"']+)["']/);
+                const pubM = c.match(/<pubDate>([\s\S]*?)<\/pubDate>/);
+
+                let timeStr = 'Az Önce';
+                if (pubM) {
+                    try {
+                        const d = new Date(pubM[1]);
+                        if (!isNaN(d.getTime())) {
+                            timeStr = d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+                        }
+                    } catch(e) {}
+                }
+
+                const title = titleM ? titleM[1].trim() : '';
+                if (title) {
+                    items.push({
+                        title,
+                        link: linkM ? linkM[1].trim() : 'https://www.ensonhaber.com',
+                        category: catM ? catM[1].trim() : 'En Son Haber',
+                        desc: descM ? descM[1].replace(/<[^>]+>/g, '').trim().slice(0, 140) : '',
+                        image: imgM ? imgM[1].replace(/&amp;/g, '&').trim() : '',
+                        time: timeStr
+                    });
+                }
+            }
+        }
+
+        return items;
+    }
+
+    // Canlı RSS Kaynağını (https://www.ensonhaber.com/rss/ensonhaber.xml) Çeken Fonksiyon
+    async function fetchLiveEnsonhaberFeed() {
+        const targetRssUrl = 'https://www.ensonhaber.com/rss/ensonhaber.xml';
+        const endpoints = [
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(targetRssUrl)}`,
+            `https://corsproxy.io/?url=${encodeURIComponent(targetRssUrl)}`,
+            `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetRssUrl)}`,
+            targetRssUrl
+        ];
+
+        for (const ep of endpoints) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                const res = await fetch(ep, { signal: controller.signal, cache: 'no-cache' });
+                clearTimeout(timeoutId);
+
+                if (res.ok) {
+                    const xmlData = await res.text();
+                    if (xmlData && (xmlData.includes('<item>') || xmlData.includes('&lt;item&gt;'))) {
+                        const parsed = parseRssXml(xmlData);
+                        if (parsed && parsed.length > 0) {
+                            renderSlides(parsed);
+                            if (liveIndicator) {
+                                liveIndicator.textContent = 'CANLI AKTİF';
+                                liveIndicator.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                                liveIndicator.setAttribute('title', 'Ensonhaber.com canlı RSS akışı senkronize edildi');
+                            }
+                            return;
+                        }
+                    }
+                }
+            } catch (err) {
+                // Diğer proxy'ye geç
+            }
+        }
+    }
+
+    // 1. Hemen yerleşik zengin güncel verilerle slaytı başlat (Sıfır bekleme, akıcı deneyim)
+    renderSlides(fallbackNewsItems);
+    startAutoPlay();
+
+    // 2. Arka planda canlı RSS'ten en yeni haberleri çek ve güncelle
+    setTimeout(fetchLiveEnsonhaberFeed, 800);
+
+    // 3. Her 5 dakikada bir canlı RSS'i tazele
+    setInterval(fetchLiveEnsonhaberFeed, 5 * 60 * 1000);
+}

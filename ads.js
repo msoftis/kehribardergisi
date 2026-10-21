@@ -146,6 +146,29 @@ const ADS_CONFIG = {
         },
 
         customHtml: ""
+    },
+
+    // ------------------------------------------------------------------------
+    // 6. EN SON HABERLER ALTI REKLAMI (Slayt Altı Boşluk Doldurucu)
+    // ------------------------------------------------------------------------
+    ensonhaberBottom: {
+        enabled: true,
+        type: "banner", // "banner", "adsense" veya "custom"
+
+        adsenseSlot: "7887510058",
+        adsenseFormat: "auto",
+
+        banner: {
+            imageUrl: "img/300x250.gif", // 300x250 GIF Reklam Görseli
+            targetUrl: "https://msoftis.blogspot.com/p/iletisim.html",
+            altText: "En Son Haberler Sponsorluk & Reklam Alanı",
+            tagText: "SPONSORLU / REKLAM ALANI",
+            titleText: "Google AdSense & Özel Sponsorluk Alanı",
+            subText: "En Son Haberler manşetlerinin hemen altında yüksek etkileşimli reklam alanı",
+            ctaText: "Reklam Ver & İletişim ↗"
+        },
+
+        customHtml: ""
     }
 };
 
@@ -167,6 +190,7 @@ const ADS_CONFIG = {
         renderMidBanner();
         renderBottomLeaderboard();
         renderStickyBottom();
+        renderEnsonhaberBottom();
     }
 
     // Google AdSense script tag ekleme
@@ -307,6 +331,22 @@ const ADS_CONFIG = {
                 document.body.style.paddingBottom = '0';
             });
         }
+    }
+
+    // 6. En Son Haberler Altı Reklam
+    function renderEnsonhaberBottom() {
+        const el = document.getElementById('ad-ensonhaber-bottom-container');
+        if (!el) return;
+
+        const cfg = ADS_CONFIG.ensonhaberBottom;
+        if (!cfg || !cfg.enabled) {
+            el.style.display = 'none';
+            return;
+        }
+
+        el.style.display = 'flex';
+        el.innerHTML = buildAdCardHtml(cfg, 'ad-esh-bottom');
+        triggerAdsenseIfNeeded(cfg);
     }
 
     // Ortak Reklam Kartı HTML Üretici
