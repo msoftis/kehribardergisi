@@ -5533,6 +5533,7 @@ body.page-islam .drawer-sale-box {
     position: relative;
     border-bottom: 3px solid #d97706;
     box-shadow: 0 4px 20px rgba(4, 120, 87, 0.25);
+    overflow: hidden;
 }
 
 .islam-hero-inner {
@@ -5543,6 +5544,12 @@ body.page-islam .drawer-sale-box {
     flex-wrap: wrap;
 }
 
+.islam-hero-text {
+    flex: 1 1 320px;
+    min-width: 0;
+    max-width: 100%;
+}
+
 .islam-hero-text h1 {
     font-size: clamp(1.5rem, 3.2vw, 2.2rem);
     font-weight: 800;
@@ -5551,6 +5558,7 @@ body.page-islam .drawer-sale-box {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .islam-hero-text p {
@@ -5590,10 +5598,10 @@ body.page-islam .drawer-sale-box {
 /* HIZLI GEZİNME DÜĞMELERİ */
 .islam-nav-pills {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
     margin-top: 16px;
-    overflow-x: auto;
-    padding-bottom: 4px;
+    max-width: 100%;
 }
 
 .islam-pill-link {
@@ -5610,6 +5618,7 @@ body.page-islam .drawer-sale-box {
     font-weight: 600;
     white-space: nowrap;
     transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
 .islam-pill-link:hover {
@@ -5648,6 +5657,7 @@ body.page-islam .drawer-sale-box {
     font-weight: 700;
     color: var(--text-primary);
     margin: 0;
+    flex-wrap: wrap;
 }
 
 .islam-title-badge {
@@ -5823,6 +5833,7 @@ body.page-islam .drawer-sale-box {
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-wrap: wrap;
 }
 
 .quran-toggle-btn {
@@ -5895,6 +5906,7 @@ body.page-islam .drawer-sale-box {
     justify-content: center;
     gap: 8px;
     margin: 10px 0 16px;
+    flex-wrap: wrap;
 }
 
 .surah-badge {
@@ -6011,6 +6023,8 @@ body.page-islam .drawer-sale-box {
     margin-bottom: 14px;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .ayah-badge {
@@ -6025,6 +6039,7 @@ body.page-islam .drawer-sale-box {
 .ayah-actions {
     display: flex;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 .ayah-action-btn {
@@ -6122,6 +6137,7 @@ body[data-theme="dark"] .hadith-arabic-text {
     gap: 8px;
     font-size: 0.85rem;
     color: var(--text-muted);
+    flex-wrap: wrap;
 }
 
 .hadith-source-book {
@@ -6135,6 +6151,7 @@ body[data-theme="dark"] .hadith-arabic-text {
 .hadith-actions {
     display: flex;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 .hadith-refresh-btn, .hadith-copy-btn {
@@ -6521,6 +6538,8 @@ body[data-theme="dark"] .esma-arabic {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .dua-title {
@@ -6617,6 +6636,8 @@ body[data-theme="dark"] .esma-arabic {
     align-items: center;
     padding: 16px 20px;
     border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .esma-modal-body {
@@ -6667,6 +6688,157 @@ body[data-theme="dark"] .esma-arabic {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+/* İSLAM SAYFASI MOBİL UYUMLULUK DÜZENLEMELERİ */
+@media (max-width: 768px) {
+    .islam-hero-banner {
+        padding: 20px 0 18px;
+        margin-bottom: 18px;
+    }
+
+    .islam-hero-inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .islam-hero-text {
+        flex: none;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .islam-hero-text h1 {
+        font-size: 1.4rem;
+    }
+
+    .islam-hero-text p {
+        font-size: 0.88rem;
+    }
+
+    .islam-nav-pills {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        width: 100%;
+    }
+
+    .islam-pill-link {
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        min-width: 0;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .islam-hero-dates {
+        width: 100%;
+        align-items: flex-start;
+        box-sizing: border-box;
+    }
+
+    .islam-section-card {
+        padding: 16px 14px;
+        margin-bottom: 18px;
+    }
+
+    .islam-section-header {
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+    }
+
+    .islam-section-title {
+        font-size: 1.1rem;
+    }
+
+    .namaz-controls {
+        width: 100%;
+        gap: 10px;
+    }
+
+    .namaz-city-select {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .namaz-next-badge {
+        width: 100%;
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
+
+    .quran-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px;
+    }
+
+    .quran-selectors {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .quran-surah-select,
+    .quran-ayah-select {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .quran-view-toggles {
+        width: 100%;
+    }
+
+    .quran-toggle-btn {
+        flex: 1 1 auto;
+        text-align: center;
+        padding: 6px 8px;
+        font-size: 0.76rem;
+    }
+
+    .font-size-controls {
+        align-self: flex-end;
+    }
+
+    .hadith-actions,
+    .esma-actions-row {
+        width: 100%;
+    }
+
+    .hadith-refresh-btn,
+    .hadith-copy-btn,
+    .esma-actions-row .esma-btn {
+        flex: 1 1 auto;
+        justify-content: center;
+    }
+
+    .ayah-card {
+        padding: 14px;
+    }
+
+    .hadith-wrapper,
+    .dua-card,
+    .zakat-result-box {
+        padding: 16px;
+    }
+
+    .quran-scroll-hint {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+}
+
+@media (max-width: 380px) {
+    .islam-nav-pills {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Sadece Sayfalar Menüsü: Etiketleri, rozetleri, ayırıcıları ve alt bağlantıları gizle */

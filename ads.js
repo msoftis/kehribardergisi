@@ -1,6 +1,6 @@
+* ============================================================================
+* KEHRİBAR MEDYA - MERKEZİ REKLAM YÖNETİMİ & KONTROL PANELİ (ads.js)
 /**
- * ============================================================================
- * KEHRİBAR MEDYA - MERKEZİ REKLAM YÖNETİMİ & KONTROL PANELİ (ads.js)
  * ============================================================================
  * Sitenizdeki tüm reklam alanlarını tek bir yerden buradan yönetebilirsiniz.
  * 
